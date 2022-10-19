@@ -4,11 +4,8 @@ import mongoose from 'mongoose';
 import routes from './routes/index.js';
 
 const fastify = Fastify({
-  logger: true
+  logger: { level: 'info', file: '../fastity.log' }
 });
-
-// const mongoose = require('mongoose');
-// const routes = require('./routes');
 
 routes.forEach((route, index) => {
   fastify.route(route);
