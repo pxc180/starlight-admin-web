@@ -1,4 +1,3 @@
-// const userController = require('../controllers/userController');
 import userController from '../controllers/userController.js';
 
 const APIPATH = '/api/';
@@ -18,7 +17,13 @@ const routes = [
     url: getFullPath('/queryById'),
     schema: {
       querystring: {
-        id: { type: 'string' }
+        type: 'object',
+        properties: {
+          id: {
+            type: 'string'
+          }
+        },
+        required: ['id']
       }
     },
     handler: userController.get
@@ -31,6 +36,17 @@ const routes = [
   {
     method: 'PUT',
     url: getFullPath('/edit'),
+    schema: {
+      body: {
+        type: 'object',
+        properties: {
+          id: {
+            type: 'string'
+          }
+        },
+        required: ['id']
+      }
+    },
     handler: userController.update
   },
   {
@@ -38,7 +54,13 @@ const routes = [
     url: getFullPath('/deleteById'),
     schema: {
       querystring: {
-        id: { type: 'string' }
+        type: 'object',
+        properties: {
+          id: {
+            type: 'string'
+          }
+        },
+        required: ['id']
       }
     },
     handler: userController.deleteUser

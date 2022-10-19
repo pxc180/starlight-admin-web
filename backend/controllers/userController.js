@@ -14,7 +14,19 @@ async function get(req, res) {
   try {
     const id = req.query.id;
     const user = await User.findById(id);
-    res.send({ statusCode: res.statusCode, data: user, message: '操作成功!' });
+    if (user) {
+      res.send({
+        statusCode: res.statusCode,
+        data: user,
+        message: '操作成功!'
+      });
+    } else {
+      res.send({
+        statusCode: res.statusCode,
+        data: user,
+        message: '未查询到数据!'
+      });
+    }
   } catch (error) {
     throw boom.boomify(error);
   }
