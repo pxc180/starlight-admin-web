@@ -1,11 +1,17 @@
 // const fastify = require('fastify')({ logger: true });
 import Fastify from 'fastify';
 import mongoose from 'mongoose';
+import fastifySwagger from '@fastify/swagger';
+import fastifyUi from '@fastify/swagger-ui';
 import routes from './routes/index.js';
+import { options as swagger } from './config/swagger.js';
 
-const fastify = Fastify({
+const fastify = new Fastify({
   logger: { level: 'info', file: '../fastity.log' }
 });
+
+await fastify.register(fastifySwagger);
+await fastify.register(fastifyUi, swagger);
 
 routes.forEach((route, index) => {
   fastify.route(route);
@@ -19,10 +25,6 @@ mongoose
   .catch(err => {
     console.log(err);
   });
-
-fastify.get('/', async (request, reply) => {
-  return { message: 'Hello interaction-store-backend' };
-});
 
 const start = async () => {
   try {

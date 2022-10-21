@@ -1,4 +1,5 @@
 import userController from '../controllers/userController.js';
+import userSchema from '../docs/users.js';
 
 const APIPATH = '/api/';
 const VERSION = 'v1';
@@ -10,42 +11,32 @@ const routes = [
   {
     method: 'GET',
     url: getFullPath('/queryList'),
+    schema: {
+      ...userSchema.list
+    },
     handler: userController.getList
   },
   {
     method: 'GET',
     url: getFullPath('/queryById'),
     schema: {
-      querystring: {
-        type: 'object',
-        properties: {
-          id: {
-            type: 'string'
-          }
-        },
-        required: ['id']
-      }
+      ...userSchema.detail
     },
     handler: userController.get
   },
   {
     method: 'POST',
     url: getFullPath('/add'),
+    schema: {
+      ...userSchema.add
+    },
     handler: userController.add
   },
   {
     method: 'PUT',
     url: getFullPath('/edit'),
     schema: {
-      body: {
-        type: 'object',
-        properties: {
-          id: {
-            type: 'string'
-          }
-        },
-        required: ['id']
-      }
+      ...userSchema.update
     },
     handler: userController.update
   },
@@ -53,15 +44,7 @@ const routes = [
     method: 'DELETE',
     url: getFullPath('/deleteById'),
     schema: {
-      querystring: {
-        type: 'object',
-        properties: {
-          id: {
-            type: 'string'
-          }
-        },
-        required: ['id']
-      }
+      ...userSchema.delete
     },
     handler: userController.deleteUser
   }
