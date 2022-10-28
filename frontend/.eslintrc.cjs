@@ -7,12 +7,14 @@ module.exports = {
   extends: ['plugin:vue/vue3-essential', 'standard'],
   overrides: [],
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module'
+    ecmaVersion: 6,
+    sourceType: 'module',
+    ecmaFeatures: {
+      modules: true
+    },
+    requireConfigFile: false
+    // parser: '@babel/eslint-parser'
   },
   plugins: ['vue'],
-  rules: {
-    'no-unused-vars': 'warn',
-    'comma-dangle': ['error', 'never']
-  }
+  rules: {}
 }
