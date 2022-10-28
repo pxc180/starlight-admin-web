@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@arco-design/web-vue": "^2.37.4",
     "pinia": "^2.0.23",
     "vue": "^3.2.41",
     "vue-router": "^4.1.6"
