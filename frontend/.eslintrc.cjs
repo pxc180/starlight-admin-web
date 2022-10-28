@@ -16,5 +16,8 @@ module.exports = {
     // parser: '@babel/eslint-parser'
   },
   plugins: ['vue'],
-  rules: {}
+  rules: {
+    'vue/multi-word-component-names': 0,
+    'space-before-function-paren': ['error', 'never']
+  }
 }
