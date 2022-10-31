@@ -12,8 +12,8 @@ module.exports = {
     ecmaFeatures: {
       modules: true
     },
-    requireConfigFile: false
-    // parser: '@babel/eslint-parser'
+    requireConfigFile: false,
+    parser: '@babel/eslint-parser'
   },
   plugins: ['vue'],
   rules: {
