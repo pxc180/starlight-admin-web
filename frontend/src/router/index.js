@@ -1,13 +1,38 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import login from '@/views/login/index.vue'
-import GlobalLayout from '@/components/layout/GlobalLayout.vue'
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/login', name: 'login', component: login },
-    { path: '/', redirect: 'login' },
-    { path: '/dashboard', name: 'dashboard', component: GlobalLayout }
+    {
+      path: '/',
+      name: 'root',
+      redirect: 'login',
+      component: () => import('@/components/layout/GlobalLayout.vue'),
+      children: [
+        {
+          path: '/dashboard',
+          name: 'dashboard',
+          redirect: '/dashboard/workplace',
+          children: [
+            {
+              path: '/dashboard/workplace',
+              name: 'dashboard-workplace',
+              component: () => import('@/views/dashboard/workplace/Index.vue')
+            },
+            {
+              path: '/dashboard/monitor',
+              name: 'dashboard-monitor',
+              component: () => import('@/views/dashboard/monitor/Index.vue')
+            }
+          ]
+        }
+      ]
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/login/index.vue')
+    }
   ],
   // 用于控制切换路由后页面滚动条置于何处
   scrollBehavior() {

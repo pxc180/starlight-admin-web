@@ -4,7 +4,9 @@
     <a-layout>
       <a-layout-sider class="global-layout-sider" hide-trigger collapsible> </a-layout-sider>
       <a-layout class="global-layout-content">
-        <a-layout-content>Content</a-layout-content>
+        <a-layout-content>
+          <PageLayout></PageLayout>
+        </a-layout-content>
         <a-layout-footer class="global-layout-footer">
           <div>Pxc</div>
         </a-layout-footer>
@@ -13,7 +15,9 @@
   </a-layout>
 </template>
 
-<script setup></script>
+<script setup>
+import PageLayout from '../page/PageLayout.vue'
+</script>
 
 <style scoped lang="less">
 @header-size-height: 60px;
@@ -45,6 +49,7 @@
     overflow: hidden;
     padding-top: @header-size-height;
     padding-left: 200px;
+    background-color: var(--color-fill-2);
 
     .arco-layout-content {
       padding: 12px;
