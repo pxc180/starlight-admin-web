@@ -7,8 +7,12 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 export default defineConfig({
   plugins: [vue(), vueJsx()],
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src')
-    }
+    alias: [
+      { find: '@', replacement: path.resolve(__dirname, 'src') },
+      {
+        find: 'vue',
+        replacement: 'vue/dist/vue.esm-bundler.js' // compile template
+      }
+    ]
   }
 })
