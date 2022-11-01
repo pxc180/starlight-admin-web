@@ -13,16 +13,19 @@ const router = createRouter({
           path: '/dashboard',
           name: 'dashboard',
           redirect: '/dashboard/workplace',
+          meta: {
+            icon: 'icon-dashboard'
+          },
           children: [
             {
               path: '/dashboard/workplace',
               name: 'dashboard-workplace',
-              component: () => import('@/views/dashboard/workplace/Index.vue')
+              component: () => import('@/views/dashboard/workplace/index.vue')
             },
             {
               path: '/dashboard/monitor',
               name: 'dashboard-monitor',
-              component: () => import('@/views/dashboard/monitor/Index.vue')
+              component: () => import('@/views/dashboard/monitor/index.vue')
             }
           ]
         }

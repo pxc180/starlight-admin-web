@@ -2,7 +2,9 @@
   <a-layout class="global-layout">
     <div class="global-layout-header"></div>
     <a-layout>
-      <a-layout-sider class="global-layout-sider" hide-trigger collapsible> </a-layout-sider>
+      <a-layout-sider class="global-layout-sider" hide-trigger collapsible>
+        <Menu />
+      </a-layout-sider>
       <a-layout class="global-layout-content">
         <a-layout-content>
           <PageLayout></PageLayout>
@@ -17,6 +19,7 @@
 
 <script setup>
 import PageLayout from '../page/PageLayout.vue'
+import Menu from '../menu/index.vue'
 </script>
 
 <style scoped lang="less">
