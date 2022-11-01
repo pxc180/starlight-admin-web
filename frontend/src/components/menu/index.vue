@@ -2,41 +2,12 @@
 import { compile, defineComponent, h, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
-const routerList = [
-  {
-    path: '/dashboard',
-    name: 'dashboard',
-    redirect: '/dashboard/workplace',
-    meta: {
-      title: '首页',
-      icon: 'icon-dashboard'
-    },
-    children: [
-      {
-        path: '/dashboard/workplace',
-        name: 'dashboard-workplace',
-        component: () => import('@/views/dashboard/workplace/index.vue'),
-        meta: {
-          title: '工作台'
-        }
-      },
-      {
-        path: '/dashboard/monitor',
-        name: 'dashboard-monitor',
-        component: () => import('@/views/dashboard/monitor/index.vue'),
-        meta: {
-          title: '监控台'
-        }
-      }
-    ]
-  }
-]
+import { appRoutes } from '@/router/routes'
 
 export default defineComponent({
   setup() {
     const router = useRouter()
     const selectedKeys = ref([])
-    console.log(router.getRoutes())
 
     watch(
       () => router.currentRoute.value.name,
@@ -87,7 +58,8 @@ export default defineComponent({
         }
         return nodes
       }
-      return travel(routerList)
+
+      return travel(appRoutes)
     }
 
     return () => (

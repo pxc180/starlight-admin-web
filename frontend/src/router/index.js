@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { appRoutes } from './routes'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -8,28 +9,7 @@ const router = createRouter({
       name: 'root',
       redirect: 'login',
       component: () => import('@/components/layout/GlobalLayout.vue'),
-      children: [
-        {
-          path: '/dashboard',
-          name: 'dashboard',
-          redirect: '/dashboard/workplace',
-          meta: {
-            icon: 'icon-dashboard'
-          },
-          children: [
-            {
-              path: '/dashboard/workplace',
-              name: 'dashboard-workplace',
-              component: () => import('@/views/dashboard/workplace/index.vue')
-            },
-            {
-              path: '/dashboard/monitor',
-              name: 'dashboard-monitor',
-              component: () => import('@/views/dashboard/monitor/index.vue')
-            }
-          ]
-        }
-      ]
+      children: [...appRoutes]
     },
     {
       path: '/login',
