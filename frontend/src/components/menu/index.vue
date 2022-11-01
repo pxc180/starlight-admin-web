@@ -104,4 +104,19 @@ export default defineComponent({
   height: 100%;
   width: 100%;
 }
+:deep(.arco-menu-inner) {
+  .arco-menu-inline-header {
+    display: flex;
+    align-items: center;
+  }
+  .arco-menu-indent-list {
+    display: inline-block;
+    width: 34px;
+  }
+  .arco-icon {
+    &:not(.arco-icon-down) {
+      font-size: 18px;
+    }
+  }
+}
 </style>

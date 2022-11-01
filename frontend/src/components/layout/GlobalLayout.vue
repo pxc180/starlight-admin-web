@@ -2,7 +2,12 @@
   <a-layout class="global-layout">
     <div class="global-layout-header"></div>
     <a-layout>
-      <a-layout-sider class="global-layout-sider" hide-trigger collapsible>
+      <a-layout-sider
+        class="global-layout-sider"
+        style="width: 220px"
+        hide-trigger
+        collapsible
+      >
         <Menu />
       </a-layout-sider>
       <a-layout class="global-layout-content">
@@ -51,7 +56,7 @@ import Menu from '../menu/index.vue'
     min-height: calc(100vh - @header-size-height);
     overflow: hidden;
     padding-top: @header-size-height;
-    padding-left: 200px;
+    padding-left: 220px;
     background-color: var(--color-fill-2);
 
     .arco-layout-content {
