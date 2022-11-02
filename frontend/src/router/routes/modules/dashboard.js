@@ -9,7 +9,7 @@ const dashboard = {
   },
   children: [
     {
-      path: 'workplace',
+      path: '/dashboard/workplace',
       name: 'dashboard-workplace',
       component: () => import('@/views/dashboard/workplace/index.vue'),
       meta: {
@@ -18,7 +18,7 @@ const dashboard = {
       }
     },
     {
-      path: 'monitor',
+      path: '/dashboard/monitor',
       name: 'dashboard-monitor',
       component: () => import('@/views/dashboard/monitor/index.vue'),
       meta: {
