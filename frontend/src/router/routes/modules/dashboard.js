@@ -1,10 +1,11 @@
 const dashboard = {
   path: '/dashboard',
   name: 'dashboard',
-  redirect: 'dashboard',
+  redirect: '/dashboard/workplace',
   meta: {
     title: '首页',
-    icon: 'icon-dashboard'
+    icon: 'icon-dashboard',
+    requireAuth: true
   },
   children: [
     {
@@ -12,7 +13,8 @@ const dashboard = {
       name: 'dashboard-workplace',
       component: () => import('@/views/dashboard/workplace/index.vue'),
       meta: {
-        title: '工作台'
+        title: '工作台',
+        requireAuth: true
       }
     },
     {
@@ -20,7 +22,8 @@ const dashboard = {
       name: 'dashboard-monitor',
       component: () => import('@/views/dashboard/monitor/index.vue'),
       meta: {
-        title: '监控台'
+        title: '监控台',
+        requireAuth: true
       }
     }
   ]
