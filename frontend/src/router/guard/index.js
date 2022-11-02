@@ -19,17 +19,17 @@ function setupPermissionGuard(router) {
     if (isLogin()) {
       if (to.name === 'login') {
         next({ path: '/dashboard' })
+      } else {
+        next()
       }
-      next()
     } else {
       if (to.meta.requireAuth) {
         needLoginModal(router)
-        // next({ path: '/login' })
         return undefined
+      } else {
+        next()
       }
-      next()
     }
-    // to and from are both route objects. must call `next`.
   })
 }
 
