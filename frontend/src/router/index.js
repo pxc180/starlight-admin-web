@@ -16,6 +16,11 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: () => import('@/views/login/index.vue')
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'notFound',
+      component: () => import('@/views/notFound/index.vue')
     }
   ],
   // 用于控制切换路由后页面滚动条置于何处
