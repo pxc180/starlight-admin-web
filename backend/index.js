@@ -1,9 +1,10 @@
 // const fastify = require('fastify')({ logger: true });
+import fs from 'fs';
+import path from 'path';
 import Fastify from 'fastify';
 import mongoose from 'mongoose';
 import fastifySwagger from '@fastify/swagger';
 import fastifyUi from '@fastify/swagger-ui';
-import routes from './routes/index.js';
 import { options as swagger } from './config/swagger.js';
 
 const fastify = new Fastify({
@@ -12,10 +13,6 @@ const fastify = new Fastify({
 
 await fastify.register(fastifySwagger);
 await fastify.register(fastifyUi, swagger);
-
-routes.forEach((route, index) => {
-  fastify.route(route);
-});
 
 mongoose
   .connect('mongodb://localhost/interaction-store-dataBase')
@@ -36,4 +33,31 @@ const start = async () => {
   }
 };
 
-start();
+const __dirname = path.resolve();
+
+let modulesFiles = fs.readdirSync(path.join(__dirname, '/routes/modules'));
+
+function formatModules(_modules) {
+  const routes = [];
+  modulesFiles.forEach(async (item, index) => {
+    let module = await import('./routes/modules/' + item);
+    const defaultModule = module.default;
+
+    if (!defaultModule) return;
+
+    const moduleList = Array.isArray(defaultModule)
+      ? [...defaultModule]
+      : [defaultModule];
+
+    routes.push(...moduleList);
+
+    if (index + 1 === _modules.length) {
+      routes.forEach((route, index) => {
+        fastify.route(route);
+      });
+
+      start();
+    }
+  });
+}
+await formatModules(modulesFiles);
