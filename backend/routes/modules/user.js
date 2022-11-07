@@ -5,7 +5,7 @@ import { getFullPath } from '../config.js';
 const userRoutes = [
   {
     method: 'GET',
-    url: getFullPath('/queryList'),
+    url: getFullPath('/user/queryList'),
     schema: {
       ...userSchema.list
     },
@@ -13,7 +13,7 @@ const userRoutes = [
   },
   {
     method: 'GET',
-    url: getFullPath('/queryById'),
+    url: getFullPath('/user/queryById'),
     schema: {
       ...userSchema.detail
     },
@@ -21,7 +21,7 @@ const userRoutes = [
   },
   {
     method: 'POST',
-    url: getFullPath('/add'),
+    url: getFullPath('/user/add'),
     schema: {
       ...userSchema.add
     },
@@ -29,7 +29,7 @@ const userRoutes = [
   },
   {
     method: 'PUT',
-    url: getFullPath('/edit'),
+    url: getFullPath('/user/edit'),
     schema: {
       ...userSchema.update
     },
@@ -37,7 +37,7 @@ const userRoutes = [
   },
   {
     method: 'DELETE',
-    url: getFullPath('/deleteById'),
+    url: getFullPath('/user/deleteById'),
     schema: {
       ...userSchema.delete
     },

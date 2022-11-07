@@ -1,6 +1,4 @@
-const APIPATH = '/api/'
-const VERSION = 'v1'
-const ENDPOINT = '/user'
+const APIPATH = '/api/';
+const VERSION = 'v1';
 
-export const getFullPath = (method = '') =>
-  `${APIPATH}${VERSION}${ENDPOINT}${method}`
+export const getFullPath = (method = '') => `${APIPATH}${VERSION}${method}`;
