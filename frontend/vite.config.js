@@ -14,5 +14,14 @@ export default defineConfig({
         replacement: 'vue/dist/vue.esm-bundler.js' // compile template
       }
     ]
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:9001/api/v1',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   }
 })
