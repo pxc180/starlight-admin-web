@@ -38,24 +38,21 @@ const __dirname = path.resolve();
 let modulesFiles = fs.readdirSync(path.join(__dirname, '/routes/modules'));
 
 function formatModules(_modules) {
-  const routes = [];
   modulesFiles.forEach(async (item, index) => {
     let module = await import('./routes/modules/' + item);
     const defaultModule = module.default;
 
     if (!defaultModule) return;
 
-    const moduleList = Array.isArray(defaultModule)
+    const routesList = Array.isArray(defaultModule)
       ? [...defaultModule]
       : [defaultModule];
 
-    routes.push(...moduleList);
+    routesList.forEach((route, index) => {
+      fastify.route(route);
+    });
 
-    if (index + 1 === _modules.length) {
-      routes.forEach((route, index) => {
-        fastify.route(route);
-      });
-
+    if (index === _modules.length - 1) {
       start();
     }
   });
