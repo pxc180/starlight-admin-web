@@ -1,5 +1,6 @@
 import boom from '@hapi/boom';
 import Role from '../models/role.js';
+import dayjs from 'dayjs';
 
 async function queryList(req, res) {
   try {
@@ -27,7 +28,16 @@ async function queryById(req, res) {
 
 async function add(req, res) {
   try {
-    const role = new Role(req.body);
+    const time = dayjs().format('YYYY-MM-DD HH:mm:ss');
+
+    const role = new Role({
+      ...req.body,
+      createTime: time,
+      createBy: '',
+      updateTime: time,
+      updateBy: ''
+    });
+
     await role.save();
 
     res.send({
@@ -42,7 +52,8 @@ async function add(req, res) {
 
 async function update(req, res) {
   try {
-    const role = req.body;
+    const time = dayjs().format('YYYY-MM-DD HH:mm:ss');
+    const role = { ...req.body, updateTime: time, updateBy: '' };
     const { ...updateData } = role;
 
     const update = await Role.findByIdAndUpdate(role.id, updateData, {
