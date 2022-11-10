@@ -11,6 +11,51 @@ const roleSchema = {
     description: '获取角色列表',
     tags: ['role'],
     summary: '获取所有角色列表'
+  },
+  queryById: {
+    description: '获取角色详情',
+    tags: ['role'],
+    summary: '通过id获取角色详情',
+    querystring: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'string'
+        }
+      },
+      required: ['id']
+    }
+  },
+  add: {
+    description: '创建新的角色',
+    tags: ['role'],
+    summary: '增加新的角色',
+    body: {
+      ...roleBody
+    }
+  },
+  update: {
+    description: '更新角色详情',
+    tags: ['role'],
+    summary: '通过id更新角色详情',
+    body: {
+      ...roleBody,
+      required: ['id']
+    }
+  },
+  delete: {
+    description: '删除角色',
+    tags: ['role'],
+    summary: '通过id删除角色',
+    querystring: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'string'
+        }
+      },
+      required: ['id']
+    }
   }
 };
 
