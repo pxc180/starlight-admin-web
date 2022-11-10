@@ -1,4 +1,4 @@
-import userSchema from '../../docs/users.js';
+import userSchema from '../../docs/user.js';
 import userController from '../../controllers/userController.js';
 import { getFullPath } from '../config.js';
 
