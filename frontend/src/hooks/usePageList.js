@@ -1,8 +1,9 @@
 import { reactive, ref, toRaw, onMounted } from 'vue'
 import { filterObj } from '../utils/tools'
+import { Message } from '@arco-design/web-vue'
 
 export default function usePageList({ searchForm, api }) {
-  const { list } = api
+  const { list, deleteById } = api
   const form = reactive(searchForm)
   const formRef = ref(null)
   const tableData = ref([])
@@ -31,8 +32,24 @@ export default function usePageList({ searchForm, api }) {
         tableData.value = value.data
         pagination.total = value.data.length
       })
+      .catch((error) => {
+        Message.warning(`操作失败，${error}`)
+      })
       .finally(() => {
         loading.value = false
+      })
+  }
+  const deleteListItem = (id) => {
+    deleteById({ id })
+      .then(() => {
+        Message.success('删除成功!')
+        if (tableData.value.length === 1 && pagination.current > 1) {
+          pagination.current--
+        }
+        queryList()
+      })
+      .catch((error) => {
+        Message.warning(`操作失败，${error}`)
       })
   }
 
@@ -44,7 +61,6 @@ export default function usePageList({ searchForm, api }) {
     }
     return filterObj(param)
   }
-
   const onPageNoChange = (pageNo) => {
     pagination.current = pageNo
     queryList()
@@ -59,7 +75,6 @@ export default function usePageList({ searchForm, api }) {
     }
     queryList()
   }
-
   const onSearchQuery = () => {
     queryList(1)
   }
@@ -77,6 +92,7 @@ export default function usePageList({ searchForm, api }) {
     onPageNoChange,
     onPageSizeChange,
     onSearchQuery,
-    onResetQuery
+    onResetQuery,
+    deleteListItem
   }
 }
