@@ -28,9 +28,14 @@ export default function usePageList({ searchForm, api }) {
       pagination.current = pageNo
     }
     list(params)
-      .then((value) => {
-        tableData.value = value.data
-        pagination.total = value.data.length
+      .then((result) => {
+        const { statusCode, data, message } = result
+        if (statusCode === 200) {
+          tableData.value = data.result
+          pagination.total = data.total
+        } else {
+          throw message
+        }
       })
       .catch((error) => {
         Message.warning(`操作失败，${error}`)
