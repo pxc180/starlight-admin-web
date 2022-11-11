@@ -38,18 +38,37 @@
 
     <a-divider style="margin-top: 0" />
 
-    <a-table row-key="id" :data="tableData" :bordered="false">
+    <a-table
+      row-key="_id"
+      :loading="loading"
+      :data="tableData"
+      :bordered="false"
+      :pagination="pagination"
+      @page-change="onPageNoChange"
+      @page-size-change="onPageSizeChange"
+    >
       <template #columns>
         <a-table-column title="角色名称" data-index="roleName"></a-table-column>
         <a-table-column
           title="创建时间"
           data-index="createTime"
         ></a-table-column>
+        <a-table-column
+          title="最近更新时间"
+          data-index="updateTime"
+        ></a-table-column>
         <a-table-column title="操作" align="center">
           <template #cell="{ record }">
             <a-button @click="onCheckRoleUser(record)" type="text">
               用户
             </a-button>
+            <a-popconfirm
+              type="warning"
+              content="是否删除该角色?"
+              @ok="deleteListItem(record._id)"
+            >
+              <a-button type="text"> 删除 </a-button>
+            </a-popconfirm>
           </template>
         </a-table-column>
       </template>
@@ -59,17 +78,22 @@
 
 <script setup>
 import usePageList from '@/hooks/usePageList'
+import { queryRoleList, deleteRoleById } from '@/api/modules/role'
 
-const listApi = (params) => {
-  return new Promise((resolve) => {
-    console.log(params)
-    resolve(params)
-  })
-}
-
-const { form, formRef, tableData, onSearchQuery, onResetQuery } = usePageList({
+const {
+  form,
+  formRef,
+  loading,
+  tableData,
+  pagination,
+  onPageNoChange,
+  onPageSizeChange,
+  onSearchQuery,
+  onResetQuery,
+  deleteListItem
+} = usePageList({
   searchForm: { roleName: '', createTime: '' },
-  api: { list: listApi }
+  api: { list: queryRoleList, deleteById: deleteRoleById }
 })
 
 const onCheckRoleUser = (record) => {
