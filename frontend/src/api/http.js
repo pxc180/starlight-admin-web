@@ -3,3 +3,7 @@ import { axios } from './server'
 export function getAction(url, param) {
   return axios({ url, method: 'get', params: param })
 }
+
+export function deleteAction(url, param) {
+  return axios({ url, method: 'delete', params: param })
+}
