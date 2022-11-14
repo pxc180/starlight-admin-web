@@ -7,3 +7,7 @@ export function getAction(url, param) {
 export function deleteAction(url, param) {
   return axios({ url, method: 'delete', params: param })
 }
+
+export function postAction(url, param, config) {
+  return axios({ url, method: 'post', data: param, ...config })
+}
