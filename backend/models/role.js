@@ -2,6 +2,7 @@ import { Schema, model } from 'mongoose';
 
 const roleSchema = new Schema({
   roleName: String,
+  description: String,
   createTime: String,
   createBy: String,
   updateTime: String,
