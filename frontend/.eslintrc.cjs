@@ -29,7 +29,7 @@ module.exports = {
       'warn',
       { vars: 'all', args: 'after-used', ignoreRestSiblings: false }
     ],
-    'space-before-function-paren': ['error', 'never'],
+    'space-before-function-paren': 0,
     'multiline-ternary': 0
   }
 }

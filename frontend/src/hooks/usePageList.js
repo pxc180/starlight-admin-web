@@ -6,6 +6,7 @@ export default function usePageList({ searchForm, api }) {
   const { list, deleteById } = api
   const form = reactive(searchForm)
   const formRef = ref(null)
+  const modalFormRef = ref(null)
   const tableData = ref([])
   const loading = ref(false)
   const pagination = reactive({
@@ -22,11 +23,12 @@ export default function usePageList({ searchForm, api }) {
   const queryList = (pageNo) => {
     loading.value = true
 
-    const params = getQueryParams()
-
     if (pageNo) {
       pagination.current = pageNo
     }
+
+    const params = getQueryParams()
+
     list(params)
       .then((result) => {
         const { statusCode, data, message } = result
@@ -44,7 +46,15 @@ export default function usePageList({ searchForm, api }) {
         loading.value = false
       })
   }
-  const deleteListItem = (id) => {
+  const onAdd = () => {
+    modalFormRef.value.onShow()
+    modalFormRef.value.title = '编辑角色'
+  }
+  const onEdit = (record) => {
+    modalFormRef.value.onShow()
+    modalFormRef.value.title = '编辑角色'
+  }
+  const onDelete = (id) => {
     deleteById({ id })
       .then(() => {
         Message.success('删除成功!')
@@ -91,6 +101,7 @@ export default function usePageList({ searchForm, api }) {
   return {
     form,
     formRef,
+    modalFormRef,
     loading,
     tableData,
     pagination,
@@ -98,6 +109,9 @@ export default function usePageList({ searchForm, api }) {
     onPageSizeChange,
     onSearchQuery,
     onResetQuery,
-    deleteListItem
+    queryList,
+    onAdd,
+    onEdit,
+    onDelete
   }
 }

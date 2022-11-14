@@ -11,7 +11,7 @@
             </a-col>
             <a-col :span="8">
               <a-form-item field="createTime" label="创建时间">
-                <a-date-picker v-model="form.createTime" />
+                <a-date-picker v-model="form.createTime" style="width: 100%" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -35,8 +35,15 @@
         </a-space>
       </a-col>
     </a-row>
-
     <a-divider style="margin-top: 0" />
+    <a-row style="margin-bottom: 16px">
+      <a-button type="primary" @click="onAdd">
+        <template #icon>
+          <icon-plus />
+        </template>
+        新建
+      </a-button>
+    </a-row>
 
     <a-table
       row-key="_id"
@@ -62,10 +69,11 @@
             <a-button @click="onCheckRoleUser(record)" type="text">
               用户
             </a-button>
+            <a-button @click="onEdit(record)" type="text">编辑</a-button>
             <a-popconfirm
               type="warning"
               content="是否删除该角色?"
-              @ok="deleteListItem(record._id)"
+              @ok="onDelete(record._id)"
             >
               <a-button type="text"> 删除 </a-button>
             </a-popconfirm>
@@ -73,16 +81,26 @@
         </a-table-column>
       </template>
     </a-table>
+    <RoleFormModal
+      ref="modalFormRef"
+      @submit="
+        () => {
+          queryList(1)
+        }
+      "
+    ></RoleFormModal>
   </a-card>
 </template>
 
 <script setup>
 import usePageList from '@/hooks/usePageList'
 import { queryRoleList, deleteRoleById } from '@/api/modules/role'
+import RoleFormModal from './components/roleFormModal.vue'
 
 const {
   form,
   formRef,
+  modalFormRef,
   loading,
   tableData,
   pagination,
@@ -90,7 +108,10 @@ const {
   onPageSizeChange,
   onSearchQuery,
   onResetQuery,
-  deleteListItem
+  queryList,
+  onAdd,
+  onEdit,
+  onDelete
 } = usePageList({
   searchForm: { roleName: '', createTime: '' },
   api: { list: queryRoleList, deleteById: deleteRoleById }
