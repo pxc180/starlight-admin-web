@@ -47,12 +47,12 @@ export default function usePageList({ searchForm, api }) {
       })
   }
   const onAdd = () => {
-    modalFormRef.value.onShow()
     modalFormRef.value.title = '编辑角色'
+    modalFormRef.value.onShow()
   }
   const onEdit = (record) => {
-    modalFormRef.value.onShow()
     modalFormRef.value.title = '编辑角色'
+    modalFormRef.value.onEdit(record)
   }
   const onDelete = (id) => {
     deleteById({ id })

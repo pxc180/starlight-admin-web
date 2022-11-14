@@ -57,6 +57,10 @@
       <template #columns>
         <a-table-column title="角色名称" data-index="roleName"></a-table-column>
         <a-table-column
+          title="角色描述"
+          data-index="description"
+        ></a-table-column>
+        <a-table-column
           title="创建时间"
           data-index="createTime"
         ></a-table-column>
@@ -84,8 +88,8 @@
     <RoleFormModal
       ref="modalFormRef"
       @submit="
-        () => {
-          queryList(1)
+        (param) => {
+          queryList(param)
         }
       "
     ></RoleFormModal>

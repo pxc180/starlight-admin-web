@@ -34,7 +34,7 @@
 <script setup>
 import { Message } from '@arco-design/web-vue'
 import { reactive, ref, toRaw } from 'vue'
-import { addRole } from '@/api/modules/role'
+import { addRole, editRole } from '@/api/modules/role'
 
 const validatorRules = {
   roleName: {
@@ -49,6 +49,7 @@ const title = ref('弹窗标题')
 const visible = ref(false)
 const loading = ref(false)
 const formRef = ref(null)
+const roleId = ref(null)
 const form = reactive({
   roleName: '',
   description: ''
@@ -64,12 +65,19 @@ const handleOk = async () => {
 
   if (flag) {
     loading.value = true
-    await addRole(toRaw(form))
-      .then((result) => {
-        const { statusCode, message } = result
+    let result
+    if (roleId.value) {
+      result = editRole({ id: roleId.value, ...toRaw(form) })
+    } else {
+      result = addRole(toRaw(form))
+    }
+    await result
+      .then((res) => {
+        const { statusCode, message } = res
         if (statusCode === 200) {
-          Message.success('添加成功!')
-          emits('submit')
+          Message.success(message)
+          emits('submit', roleId.value ? undefined : 1)
+          handleCancel()
         } else {
           throw message
         }
@@ -85,16 +93,24 @@ const handleOk = async () => {
   return flag
 }
 const handleCancel = () => {
+  roleId.value = null
   formRef.value.resetFields()
 }
 
 const onShow = () => {
   visible.value = true
 }
+const onEdit = (record) => {
+  onShow()
+  roleId.value = record._id
+  form.roleName = record.roleName
+  form.description = record.description
+}
 
 defineExpose({
   title,
-  onShow
+  onShow,
+  onEdit
 })
 </script>
 
