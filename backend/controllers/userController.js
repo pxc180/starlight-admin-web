@@ -1,4 +1,5 @@
 import boom from '@hapi/boom';
+import dayjs from 'dayjs';
 import User from '../models/user.js';
 
 import { paramsToSelector } from '../utils/filter.js';
@@ -50,8 +51,18 @@ async function get(req, res) {
 
 async function add(req, res) {
   try {
-    const user = new User(req.body);
+    const time = dayjs().format('YYYY-MM-DD HH:mm:ss');
+
+    const user = new User({
+      ...req.body,
+      createTime: time,
+      createBy: '',
+      updateTime: time,
+      updateBy: ''
+    });
+
     await user.save();
+
     res.send({
       statusCode: res.statusCode,
       data: user,
@@ -64,11 +75,15 @@ async function add(req, res) {
 
 async function update(req, res) {
   try {
-    const user = req.body;
+    const time = dayjs().format('YYYY-MM-DD HH:mm:ss');
+
+    const user = { ...req.body, updateTime: time, updateBy: '' };
     const { ...updateData } = user;
+
     const update = await User.findByIdAndUpdate(user.id, updateData, {
       new: true
     });
+
     res.send({
       statusCode: res.statusCode,
       data: update,
