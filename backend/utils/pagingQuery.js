@@ -3,7 +3,8 @@ export default async function pageQuery({
   pageNo = 1,
   pageSize = 10,
   queryParams = {},
-  sortParams = {}
+  sortParams = {},
+  populateParams = ''
 } = {}) {
   if (!model) {
     return {};
@@ -16,6 +17,7 @@ export default async function pageQuery({
     .find(queryParams)
     .skip((no - 1) * size)
     .limit(size)
+    .populate(populateParams)
     .sort(sortParams);
 
   return {
