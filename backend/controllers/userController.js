@@ -14,7 +14,8 @@ async function getList(req, res) {
       pageNo,
       pageSize,
       queryParams: paramsToSelector(conditions),
-      sortParams: { createTime: -1 }
+      sortParams: { createTime: -1 },
+      populateParams: { path: 'roleId', select: { id: 1, roleName: 1 } }
     });
 
     res.send({

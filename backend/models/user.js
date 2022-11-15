@@ -5,7 +5,13 @@ const userSchema = new Schema({
   createTime: String,
   createBy: String,
   updateTime: String,
-  updateBy: String
+  updateBy: String,
+  roleId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Role',
+    required: true,
+    default: ''
+  }
 });
 
 export default model('User', userSchema);
