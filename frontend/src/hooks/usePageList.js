@@ -13,7 +13,8 @@ export default function usePageList({ searchForm, api }) {
     current: 1,
     pageSize: 10,
     showPageSize: true,
-    showJumper: true
+    showJumper: true,
+    hideOnSinglePage: true
   })
 
   onMounted(() => {
