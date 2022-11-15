@@ -7,10 +7,15 @@ const roleBody = {
 };
 
 const roleSchema = {
+  queryAll: {
+    description: '获取所有角色信息',
+    tags: ['role'],
+    summary: '获取所有角色信息'
+  },
   queryList: {
     description: '获取角色列表',
     tags: ['role'],
-    summary: '获取所有角色列表'
+    summary: '角色列表分页查询'
   },
   queryById: {
     description: '获取角色详情',

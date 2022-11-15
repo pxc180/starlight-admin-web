@@ -5,6 +5,20 @@ import dayjs from 'dayjs';
 import { paramsToSelector } from '../utils/filter.js';
 import pageQuery from '../utils/pagingQuery.js';
 
+async function queryAll(req, res) {
+  try {
+    const role = await Role.find({}, { id: 1, roleName: 1 });
+
+    res.send({
+      statusCode: res.statusCode,
+      data: role,
+      message: '操作成功!'
+    });
+  } catch (error) {
+    throw boom.boomify(error);
+  }
+}
+
 async function queryList(req, res) {
   try {
     const { pageNo, pageSize, _t, ...conditions } = req.query;
@@ -101,4 +115,4 @@ async function deleteRole(req, res) {
   }
 }
 
-export default { queryList, queryById, add, update, deleteRole };
+export default { queryAll, queryList, queryById, add, update, deleteRole };

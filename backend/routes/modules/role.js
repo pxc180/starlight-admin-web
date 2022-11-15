@@ -5,6 +5,12 @@ import { getFullPath } from '../config.js';
 const roleRoutes = [
   {
     method: 'GET',
+    url: getFullPath('/role/queryAll'),
+    schema: { ...roleSchema.queryAll },
+    handler: roleController.queryAll
+  },
+  {
+    method: 'GET',
     url: getFullPath('/role/queryList'),
     schema: { ...roleSchema.queryList },
     handler: roleController.queryList
