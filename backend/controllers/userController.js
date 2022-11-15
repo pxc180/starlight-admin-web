@@ -1,10 +1,26 @@
 import boom from '@hapi/boom';
 import User from '../models/user.js';
 
+import { paramsToSelector } from '../utils/filter.js';
+import pageQuery from '../utils/pagingQuery.js';
+
 async function getList(req, res) {
   try {
-    const user = await User.find();
-    res.send({ statusCode: res.statusCode, data: user, message: '操作成功!' });
+    const { pageNo, pageSize, _t, ...conditions } = req.query;
+
+    const result = await pageQuery({
+      model: User,
+      pageNo,
+      pageSize,
+      queryParams: paramsToSelector(conditions),
+      sortParams: { createTime: -1 }
+    });
+
+    res.send({
+      statusCode: res.statusCode,
+      data: result,
+      message: '操作成功!'
+    });
   } catch (error) {
     throw boom.boomify(error);
   }
