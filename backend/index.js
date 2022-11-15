@@ -8,7 +8,8 @@ import fastifyUi from '@fastify/swagger-ui';
 import { options as swagger } from './config/swagger.js';
 
 const fastify = new Fastify({
-  logger: { level: 'info', file: '../fastity.log' }
+  logger: { level: 'info' }
+  // logger: { level: 'info', file: '../fastity.log' }
 });
 
 await fastify.register(fastifySwagger);
@@ -23,7 +24,7 @@ mongoose
     console.log(err);
   });
 
-const start = async () => {
+const startServe = async () => {
   try {
     await fastify.listen({ port: 9001 });
     fastify.log.info(`服务运行端口：${fastify.server.address().port}`);
@@ -38,23 +39,40 @@ const __dirname = path.resolve();
 let modulesFiles = fs.readdirSync(path.join(__dirname, '/routes/modules'));
 
 function formatModules(_modules) {
-  modulesFiles.forEach(async (item, index) => {
-    let module = await import('./routes/modules/' + item);
-    const defaultModule = module.default;
+  let finished = 0;
 
-    if (!defaultModule) return;
+  return new Promise((resolve, reject) => {
+    const start = async () => {
+      while (finished < _modules.length) {
+        try {
+          let module = await import('./routes/modules/' + _modules[finished]);
 
-    const routesList = Array.isArray(defaultModule)
-      ? [...defaultModule]
-      : [defaultModule];
+          const defaultModule = module.default;
 
-    routesList.forEach((route, index) => {
-      fastify.route(route);
-    });
+          if (!defaultModule) return;
 
-    if (index === _modules.length - 1) {
-      start();
-    }
+          const routesList = Array.isArray(defaultModule)
+            ? [...defaultModule]
+            : [defaultModule];
+
+          routesList.forEach((route, index) => {
+            fastify.route(route);
+          });
+
+          finished++;
+          if (finished === _modules.length) {
+            resolve();
+          }
+        } catch (error) {
+          start();
+        }
+      }
+    };
+
+    start();
   });
 }
-await formatModules(modulesFiles);
+
+formatModules(modulesFiles).then(() => {
+  startServe();
+});
