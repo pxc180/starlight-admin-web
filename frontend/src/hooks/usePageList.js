@@ -2,7 +2,7 @@ import { reactive, ref, toRaw, onMounted } from 'vue'
 import { filterObj } from '../utils/tools'
 import { Message } from '@arco-design/web-vue'
 
-export default function usePageList({ searchForm, api }) {
+export default function usePageList({ searchForm, api, formatTableData }) {
   const { list, deleteById } = api
   const form = reactive(searchForm)
   const formRef = ref(null)
@@ -34,7 +34,9 @@ export default function usePageList({ searchForm, api }) {
       .then((result) => {
         const { statusCode, data, message } = result
         if (statusCode === 200) {
-          tableData.value = data.result
+          tableData.value = formatTableData
+            ? formatTableData(data.result)
+            : data.result
           pagination.total = data.total
         } else {
           throw message
