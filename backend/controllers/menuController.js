@@ -52,4 +52,26 @@ async function add(req, res) {
   }
 }
 
-export default { queryAll, add };
+async function deleteMenu(req, res) {
+  try {
+    const id = req.query.id;
+    const menu = await Menu.findByIdAndRemove(id);
+    if (menu) {
+      res.send({
+        statusCode: res.statusCode,
+        data: menu,
+        message: '删除成功!'
+      });
+    } else {
+      res.send({
+        statusCode: res.statusCode,
+        data: menu,
+        message: '未查询到数据!'
+      });
+    }
+  } catch (error) {
+    throw boom.boomify(error);
+  }
+}
+
+export default { queryAll, add, deleteMenu };

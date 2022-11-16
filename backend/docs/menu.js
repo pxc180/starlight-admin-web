@@ -28,6 +28,15 @@ const menuSchema = {
     body: {
       ...menuBody
     }
+  },
+  delete: {
+    description: '删除菜单',
+    tags: ['menu'],
+    summary: '通过id删除菜单',
+    querystring: {
+      ...menuBody,
+      required: ['id']
+    }
   }
 };
 

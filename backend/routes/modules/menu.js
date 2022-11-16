@@ -16,6 +16,14 @@ const menuRoutes = [
       ...menuSchema.add
     },
     handler: menuController.add
+  },
+  {
+    method: 'DELETE',
+    url: getFullPath('/menu/deleteById'),
+    schema: {
+      ...menuSchema.delete
+    },
+    handler: menuController.deleteMenu
   }
 ];
 

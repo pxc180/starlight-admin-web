@@ -114,6 +114,7 @@ const formRef = ref(null)
 const menuId = ref(null)
 const form = reactive({
   name: '测试',
+  parentId: null,
   url: '/test',
   component: '/emptyPage/index',
   icon: 'icon-apps',
@@ -122,7 +123,6 @@ const form = reactive({
   hide: 0,
   keepAlive: 0
 })
-console.log(menuId)
 
 const handleOk = async () => {
   let flag = false

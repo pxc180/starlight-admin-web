@@ -82,7 +82,7 @@
 
 <script setup>
 import usePageList from '@/hooks/usePageList'
-import { queryAllMenu } from '@/api/modules/menu'
+import { queryAllMenu, deleteMenuById } from '@/api/modules/menu'
 import MenuFormDrawer from './components/menuFormDrawer.vue'
 
 const {
@@ -102,8 +102,9 @@ const {
   onDelete
 } = usePageList({
   searchForm: { name: '' },
-  api: { list: queryAllMenu },
+  api: { list: queryAllMenu, deleteById: deleteMenuById },
   formatTableData: (data) => {
+    console.log(data)
     return data.map((v) => ({ ...v, children: null }))
   }
 })
