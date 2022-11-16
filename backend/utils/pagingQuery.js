@@ -12,7 +12,7 @@ export default async function pageQuery({
   const no = pageNo && Number.isInteger(+pageNo) && pageNo > 0 ? +pageNo : 1;
   const size =
     pageSize && Number.isInteger(+pageSize) && pageSize > 0 ? +pageSize : 10;
-  const total = await model.count();
+  const total = await model.count(queryParams);
   const result = await model
     .find(queryParams)
     .skip((no - 1) * size)
