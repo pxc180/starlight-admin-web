@@ -29,6 +29,15 @@ const menuSchema = {
       ...menuBody
     }
   },
+  edit: {
+    description: '更新菜单详情',
+    tags: ['menu'],
+    summary: '通过id更新菜单详情',
+    body: {
+      ...menuBody,
+      required: ['id']
+    }
+  },
   delete: {
     description: '删除菜单',
     tags: ['menu'],

@@ -56,6 +56,26 @@ async function add(req, res) {
   }
 }
 
+async function edit(req, res) {
+  try {
+    const time = dayjs().format('YYYY-MM-DD HH:mm:ss');
+    const menu = { ...req.body, updateTime: time, updateBy: '' };
+    const { ...updateData } = menu;
+
+    const update = await Menu.findByIdAndUpdate(menu.id, updateData, {
+      new: true
+    });
+
+    res.send({
+      statusCode: res.statusCode,
+      data: update.id,
+      message: '操作成功!'
+    });
+  } catch (error) {
+    throw boom.boomify(error);
+  }
+}
+
 async function deleteMenu(req, res) {
   try {
     const id = req.query.id;
@@ -78,4 +98,4 @@ async function deleteMenu(req, res) {
   }
 }
 
-export default { queryAll, add, deleteMenu };
+export default { queryAll, add, edit, deleteMenu };

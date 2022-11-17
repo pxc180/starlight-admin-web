@@ -42,7 +42,7 @@
       </a-form-item>
 
       <a-form-item
-        field="name"
+        field="component"
         label="前端组件"
         :rules="validatorRules.component.rules"
         :validate-trigger="validatorRules.component.trigger"
@@ -80,7 +80,7 @@
 <script setup>
 import { Message } from '@arco-design/web-vue'
 import { reactive, ref, toRaw } from 'vue'
-import { addMenu } from '@/api/modules/menu'
+import { addMenu, editMenu } from '@/api/modules/menu'
 
 const emits = defineEmits(['submit'])
 
@@ -113,11 +113,11 @@ const loading = ref(false)
 const formRef = ref(null)
 const menuId = ref(null)
 const form = reactive({
-  name: '测试',
+  name: '',
   parentId: null,
-  url: '/test',
-  component: '/emptyPage/index',
-  icon: 'icon-apps',
+  url: '',
+  component: '',
+  icon: '',
   redirect: '',
   sortNo: 1,
   hide: 0,
@@ -136,7 +136,7 @@ const handleOk = async () => {
     loading.value = true
     let result
     if (menuId.value) {
-      // result = editUser({ id: menuId.value, ...toRaw(form) })
+      result = editMenu({ id: menuId.value, ...toRaw(form) })
     } else {
       result = addMenu(toRaw(form))
     }
@@ -172,7 +172,28 @@ const onShow = () => {
 const onEdit = (record) => {
   onShow()
   menuId.value = record._id
-  form.name = record.name
+  const {
+    name,
+    parentId,
+    url,
+    component,
+    icon,
+    redirect,
+    sortNo,
+    hide,
+    keepAlive
+  } = record
+  Object.assign(form, {
+    name,
+    parentId,
+    url,
+    component,
+    icon,
+    redirect,
+    sortNo,
+    hide,
+    keepAlive
+  })
 }
 
 defineExpose({

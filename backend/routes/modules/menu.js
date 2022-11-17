@@ -18,6 +18,14 @@ const menuRoutes = [
     handler: menuController.add
   },
   {
+    method: 'PUT',
+    url: getFullPath('/menu/edit'),
+    schema: {
+      ...menuSchema.edit
+    },
+    handler: menuController.edit
+  },
+  {
     method: 'DELETE',
     url: getFullPath('/menu/deleteById'),
     schema: {
