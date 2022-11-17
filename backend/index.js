@@ -39,18 +39,15 @@ const __dirname = path.resolve();
 let modulesFiles = fs.readdirSync(path.join(__dirname, '/routes/modules'));
 
 function formatModules(_modules) {
-  console.log(_modules);
   let finished = 0;
 
   return new Promise((resolve, reject) => {
     const start = async () => {
-      console.log(11111);
       while (finished < _modules.length) {
         try {
           let module = await import('./routes/modules/' + _modules[finished]);
 
           const defaultModule = module.default;
-          console.log(defaultModule);
 
           if (!defaultModule) return;
 

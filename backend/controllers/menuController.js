@@ -3,6 +3,7 @@ import Menu from '../models/menu.js';
 import dayjs from 'dayjs';
 
 import { paramsToSelector } from '../utils/filter.js';
+import { arrayToTree } from '../utils/array.js';
 
 async function queryAll(req, res) {
   try {
@@ -16,7 +17,10 @@ async function queryAll(req, res) {
     res.send({
       statusCode: res.statusCode,
       data: {
-        result: menu,
+        result: arrayToTree({
+          arr: menu,
+          fieldsNames: { id: '_id', pid: 'parentId', children: 'children' }
+        }),
         current: 1,
         size: total,
         total: total
