@@ -11,7 +11,7 @@ async function queryAll(req, res) {
     const queryParams = paramsToSelector(conditions);
 
     const total = await Menu.count(queryParams);
-    const menu = await Menu.find(queryParams);
+    const menu = await Menu.find(queryParams).sort({ sortNo: 0 });
 
     res.send({
       statusCode: res.statusCode,
