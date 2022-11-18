@@ -104,49 +104,6 @@ const {
   searchForm: { name: '' },
   api: { list: queryAllMenu, deleteById: deleteMenuById }
 })
-
-function arrayToTree({
-  arr = [],
-  fieldsNames = { id: 'id', pid: 'pid', children: 'children' }
-} = {}) {
-  if (
-    !arr ||
-    Object.prototype.toString.call(arr) !== '[object Array]' ||
-    !arr.length
-  ) {
-    return []
-  }
-
-  const result = []
-  const arrMap = {}
-
-  for (const item of arr) {
-    const id = item[fieldsNames.id]
-    const pid = item[fieldsNames.pid]
-    const childrenFields = fieldsNames.children
-
-    if (!arrMap[id]) {
-      arrMap[id] = {}
-    }
-
-    arrMap[id] = { ...item, ...arrMap[id] }
-    arrMap[id][childrenFields] = arrMap[id][childrenFields] || undefined
-
-    const treeItem = arrMap[id]
-
-    if (!pid) {
-      result.push(treeItem)
-    } else {
-      if (!arrMap[pid]) {
-        arrMap[pid] = {}
-      }
-      arrMap[pid][childrenFields] = arrMap[pid][childrenFields] || []
-      arrMap[pid][childrenFields].push(treeItem)
-    }
-  }
-
-  return result
-}
 </script>
 
 <style scoped lang="less"></style>
