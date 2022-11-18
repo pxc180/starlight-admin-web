@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 
 import { paramsToSelector } from '../utils/filter.js';
 import { arrayToTree } from '../utils/array.js';
+import { getTreeDeleteIds } from '../utils/tree.js';
 
 async function queryAll(req, res) {
   try {
@@ -79,17 +80,24 @@ async function edit(req, res) {
 async function deleteMenu(req, res) {
   try {
     const id = req.query.id;
-    const menu = await Menu.findByIdAndRemove(id);
-    if (menu) {
+
+    const ids = await getTreeDeleteIds(Menu, id);
+
+    if (ids && ids.length) {
+      await Menu.bulkWrite(
+        [{ deleteMany: { filter: { _id: { $in: ids } } } }],
+        { ordered: false }
+      );
+
       res.send({
         statusCode: res.statusCode,
-        data: menu,
+        data: ids,
         message: '删除成功!'
       });
     } else {
       res.send({
         statusCode: res.statusCode,
-        data: menu,
+        data: [],
         message: '未查询到数据!'
       });
     }
