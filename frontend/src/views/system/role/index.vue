@@ -93,13 +93,16 @@
         }
       "
     ></RoleFormModal>
+    <RoleUserModal ref="userListRef"></RoleUserModal>
   </a-card>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import usePageList from '@/hooks/usePageList'
 import { queryRoleList, deleteRoleById } from '@/api/modules/role'
 import RoleFormModal from './components/roleFormModal.vue'
+import RoleUserModal from './components/RoleUserModal.vue'
 
 const {
   form,
@@ -121,8 +124,10 @@ const {
   api: { list: queryRoleList, deleteById: deleteRoleById }
 })
 
+const userListRef = ref(null)
+
 const onCheckRoleUser = (record) => {
-  console.log(record)
+  userListRef.value.onShow(record._id)
 }
 </script>
 
