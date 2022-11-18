@@ -2,7 +2,12 @@ import { reactive, ref, toRaw, onMounted } from 'vue'
 import { filterObj } from '../utils/tools'
 import { Message } from '@arco-design/web-vue'
 
-export default function usePageList({ searchForm, api, formatTableData }) {
+export default function usePageList({
+  searchForm,
+  api,
+  formatTableData,
+  disabledMounted
+}) {
   const { list, deleteById } = api
   const form = reactive(searchForm)
   const formRef = ref(null)
@@ -18,7 +23,9 @@ export default function usePageList({ searchForm, api, formatTableData }) {
   })
 
   onMounted(() => {
-    queryList(1)
+    if (!disabledMounted) {
+      queryList(1)
+    }
   })
 
   const queryList = (pageNo) => {
