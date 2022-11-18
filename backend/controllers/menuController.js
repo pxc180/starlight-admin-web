@@ -8,23 +8,30 @@ import { getTreeDeleteIds } from '../utils/tree.js';
 
 async function queryAll(req, res) {
   try {
-    const { _t, ...conditions } = req.query;
+    const { pageNo, pageSize, _t, ...conditions } = req.query;
 
     const queryParams = paramsToSelector(conditions);
 
-    const total = await Menu.count(queryParams);
     const menu = await Menu.find(queryParams).sort({ sortNo: 0 });
+
+    let result = [];
+
+    if (Object.keys(queryParams).length) {
+      result = menu;
+    } else {
+      result = arrayToTree({
+        arr: menu,
+        fieldsNames: { id: '_id', pid: 'parentId', children: 'children' }
+      });
+    }
 
     res.send({
       statusCode: res.statusCode,
       data: {
-        result: arrayToTree({
-          arr: menu,
-          fieldsNames: { id: '_id', pid: 'parentId', children: 'children' }
-        }),
+        result,
         current: 1,
-        size: total,
-        total: total
+        size: result.length,
+        total: result.length
       },
       message: '操作成功!'
     });
