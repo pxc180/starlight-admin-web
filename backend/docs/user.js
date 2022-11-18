@@ -2,7 +2,8 @@ const userBody = {
   type: 'object',
   properties: {
     id: { type: 'string' },
-    userName: { type: 'string', description: '用户名' }
+    userName: { type: 'string', description: '用户名' },
+    roleId: { type: 'string', description: '角色ID' }
   }
 };
 
@@ -11,6 +12,15 @@ const userSchema = {
     description: '获取用户列表',
     tags: ['user'],
     summary: '获取所有用户列表'
+  },
+  queryByRoleId: {
+    description: '根据角色Id查询用户',
+    tags: ['user'],
+    summary: '根据角色Id查询用户',
+    querystring: {
+      ...userBody,
+      required: ['roleId']
+    }
   },
   detail: {
     description: '获取用户详情',

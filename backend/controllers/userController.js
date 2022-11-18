@@ -1,5 +1,7 @@
+import mongoose from 'mongoose';
 import boom from '@hapi/boom';
 import dayjs from 'dayjs';
+
 import User from '../models/user.js';
 
 import { paramsToSelector } from '../utils/filter.js';
@@ -14,6 +16,32 @@ async function getList(req, res) {
       pageNo,
       pageSize,
       queryParams: paramsToSelector(conditions),
+      sortParams: { createTime: -1 },
+      populateParams: { path: 'roleId', select: { id: 1, roleName: 1 } }
+    });
+
+    res.send({
+      statusCode: res.statusCode,
+      data: result,
+      message: '操作成功!'
+    });
+  } catch (error) {
+    throw boom.boomify(error);
+  }
+}
+
+async function queryByRoleId(req, res) {
+  try {
+    const { pageNo, pageSize, roleId, _t, ...conditions } = req.query;
+
+    const result = await pageQuery({
+      model: User,
+      pageNo,
+      pageSize,
+      queryParams: {
+        roleId: mongoose.Types.ObjectId(roleId),
+        ...paramsToSelector(conditions)
+      },
       sortParams: { createTime: -1 },
       populateParams: { path: 'roleId', select: { id: 1, roleName: 1 } }
     });
@@ -117,4 +145,4 @@ async function deleteUser(req, res) {
   }
 }
 
-export default { getList, get, add, update, deleteUser };
+export default { getList, queryByRoleId, get, add, update, deleteUser };

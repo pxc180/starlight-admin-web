@@ -1,4 +1,3 @@
-// const fastify = require('fastify')({ logger: true });
 import fs from 'fs';
 import path from 'path';
 import Fastify from 'fastify';

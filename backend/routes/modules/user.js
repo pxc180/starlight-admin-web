@@ -13,6 +13,14 @@ const userRoutes = [
   },
   {
     method: 'GET',
+    url: getFullPath('/user/queryByRoleId'),
+    schema: {
+      ...userSchema.queryByRoleId
+    },
+    handler: userController.queryByRoleId
+  },
+  {
+    method: 'GET',
     url: getFullPath('/user/queryById'),
     schema: {
       ...userSchema.detail
