@@ -1,6 +1,8 @@
 <template>
   <a-layout class="global-layout">
-    <div class="global-layout-header"></div>
+    <div class="global-layout-header">
+      <div class="logo"></div>
+    </div>
     <a-layout>
       <a-layout-sider
         class="global-layout-sider"
@@ -68,6 +70,12 @@ import Menu from '../menu/index.vue'
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  .logo {
+    height: 48px;
+    width: 48px;
+    background-image: url('@/assets/logo.svg');
+    background-size: 100%;
   }
 }
 </style>
