@@ -1,7 +1,7 @@
 <template>
   <a-layout class="global-layout">
     <div class="global-layout-header">
-      <div class="logo"></div>
+      <LayoutHeader></LayoutHeader>
     </div>
     <a-layout>
       <a-layout-sider
@@ -26,6 +26,7 @@
 
 <script setup>
 import PageLayout from '../page/PageLayout.vue'
+import LayoutHeader from './LayoutHeader.vue'
 import Menu from '../menu/index.vue'
 </script>
 
@@ -44,7 +45,8 @@ import Menu from '../menu/index.vue'
     top: 0px;
     left: 0px;
     z-index: 100;
-    background-color: white;
+    background-color: var(--color-bg-2);
+    border-bottom: 1px solid var(--color-border);
   }
   .global-layout-sider {
     position: fixed;
@@ -70,12 +72,6 @@ import Menu from '../menu/index.vue'
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  .logo {
-    height: 48px;
-    width: 48px;
-    background-image: url('@/assets/logo.svg');
-    background-size: 100%;
   }
 }
 </style>
