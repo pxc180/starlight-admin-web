@@ -54,6 +54,11 @@
         <a-table-column title="菜单路径" data-index="url"></a-table-column>
         <a-table-column title="组件" data-index="component"></a-table-column>
         <a-table-column title="菜单icon" data-index="icon"></a-table-column>
+        <a-table-column title="是否隐藏" data-index="hide">
+          <template #cell="{ record }">
+            <span>{{ record.hide ? '是' : '否' }}</span>
+          </template>
+        </a-table-column>
         <a-table-column title="操作" align="center">
           <template #cell="{ record }">
             <a-button @click="onEdit(record)" type="text">编辑</a-button>
@@ -102,7 +107,8 @@ const {
   onDelete
 } = usePageList({
   searchForm: { name: '' },
-  api: { list: queryAllMenu, deleteById: deleteMenuById }
+  api: { list: queryAllMenu, deleteById: deleteMenuById },
+  disabledPage: true
 })
 </script>
 

@@ -6,7 +6,8 @@ export default function usePageList({
   searchForm,
   api,
   formatTableData,
-  disabledMounted
+  disabledMounted,
+  disabledPage
 }) {
   const { list, deleteById } = api
   const form = reactive(searchForm)
@@ -81,8 +82,8 @@ export default function usePageList({
   const getQueryParams = () => {
     const param = {
       ...toRaw(form),
-      pageNo: pagination.current,
-      pageSize: pagination.pageSize
+      pageNo: disabledPage ? null : pagination.current,
+      pageSize: disabledPage ? null : pagination.pageSize
     }
     return filterObj(param)
   }
