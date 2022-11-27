@@ -15,7 +15,7 @@ await fastify.register(fastifySwagger);
 await fastify.register(fastifyUi, swagger);
 
 mongoose
-  .connect('mongodb://localhost/interaction-store-dataBase')
+  .connect('mongodb://localhost/starlight-admin-dataBase')
   .then(() => {
     console.log('MongoDB 已连接');
   })
