@@ -9,4 +9,11 @@ import router from '@/router'
 import '@/assets/style/global.less'
 import '@/assets/style/reset-arco-css.less'
 
-createApp(App).use(ArcoVue).use(ArcoVueIcon).use(router).mount('#app')
+import store from './store'
+
+createApp(App)
+  .use(store)
+  .use(ArcoVue)
+  .use(ArcoVueIcon)
+  .use(router)
+  .mount('#app')
