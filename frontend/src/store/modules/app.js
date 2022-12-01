@@ -17,6 +17,15 @@ const useAppStore = defineStore('app', {
     updateSettings(partial) {
       this.$patch(partial)
     },
+    toggleTheme(dark) {
+      if (dark) {
+        this.theme = 'dark'
+        document.body.setAttribute('arco-theme', 'dark')
+      } else {
+        this.theme = 'light'
+        document.body.removeAttribute('arco-theme')
+      }
+    },
     getServerMenu() {
       return new Promise((resolve, reject) => {
         queryAllMenu()

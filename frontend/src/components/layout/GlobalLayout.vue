@@ -72,6 +72,7 @@ import Menu from '../menu/index.vue'
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--color-text-1);
   }
 }
 </style>
