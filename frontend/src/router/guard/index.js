@@ -1,5 +1,6 @@
 import { isLogin } from '@/utils/auth'
 import { Modal } from '@arco-design/web-vue'
+import { useAppStore } from '@/store'
 
 function needLoginModal(router) {
   Modal.info({
@@ -10,6 +11,27 @@ function needLoginModal(router) {
     modalClass: 'need-login-modal',
     onOk: () => {
       router.push('/login')
+    }
+  })
+}
+
+function setupServerPermissionGuard(router) {
+  router.beforeEach((to, from, next) => {
+    const appStore = useAppStore()
+    if (appStore.menuFromServer && !appStore.serverMenu.length) {
+      appStore.getServerMenu().then((result) => {
+        result.forEach((item) => {
+          router.addRoute('root', item)
+        })
+        router.addRoute({
+          path: '/:pathMatch(.*)*',
+          name: 'notFound',
+          component: () => import('@/views/notFound/index.vue')
+        })
+        next({ ...to, replace: true })
+      })
+    } else {
+      next()
     }
   })
 }
@@ -35,4 +57,5 @@ function setupPermissionGuard(router) {
 
 export default function createRouteGuard(router) {
   setupPermissionGuard(router)
+  setupServerPermissionGuard(router)
 }

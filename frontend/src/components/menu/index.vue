@@ -2,12 +2,14 @@
 import { compile, defineComponent, h, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { appRoutes } from '@/router/routes'
+import useMenuTree from './useMenuTree'
 
 export default defineComponent({
   setup() {
     const router = useRouter()
     const selectedKeys = ref([])
+
+    const { menuTree } = useMenuTree()
 
     watch(
       () => router.currentRoute.value.name,
@@ -59,7 +61,7 @@ export default defineComponent({
         return nodes
       }
 
-      return travel(appRoutes)
+      return travel(menuTree.value)
     }
 
     return () => (

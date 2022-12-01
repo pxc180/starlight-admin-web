@@ -59,6 +59,7 @@
             <span>{{ record.hide ? '是' : '否' }}</span>
           </template>
         </a-table-column>
+        <a-table-column title="排序" data-index="sortNo"></a-table-column>
         <a-table-column title="操作" align="center">
           <template #cell="{ record }">
             <a-button @click="onEdit(record)" type="text">编辑</a-button>
