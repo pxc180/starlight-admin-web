@@ -135,10 +135,14 @@ const handleOk = async () => {
   if (flag) {
     loading.value = true
     let result
+    const params = { ...toRaw(form) }
+    if (!params.component.startsWith('/')) {
+      params.component = '/' + params.component
+    }
     if (menuId.value) {
-      result = editMenu({ id: menuId.value, ...toRaw(form) })
+      result = editMenu({ id: menuId.value, ...params })
     } else {
-      result = addMenu(toRaw(form))
+      result = addMenu(params)
     }
     await result
       .then((res) => {
