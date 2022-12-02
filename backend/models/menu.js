@@ -5,7 +5,7 @@ const menuSchema = new Schema(
   {
     parentId: String, // 父Id
     name: String, // 菜单标题
-    url: String, // 菜单路径
+    url: { type: String, unique: true }, // 菜单路径
     component: String, // 页面组件
     hide: Number, // 是否隐藏
     redirect: String, // 跳转地址

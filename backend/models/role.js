@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 const roleSchema = new Schema(
   {
     roleName: String,
-    roleCode: String,
+    roleCode: { type: String, unique: true },
     description: String,
     createTime: String,
     createBy: String,
