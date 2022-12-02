@@ -99,7 +99,9 @@ const handleOk = async () => {
         flag = false
         const { code, message } = error
         Message.warning(
-          `操作失败，${code === '11000' ? '已有该角色编码' : message || error}`
+          `操作失败，${
+            code === '11000' ? '该角色编码已存在' : message || error
+          }`
         )
       })
       .finally(() => {
