@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import boom from '@hapi/boom';
-import dayjs from 'dayjs';
 
 import User from '../models/user.js';
 
@@ -80,13 +79,9 @@ async function get(req, res) {
 
 async function add(req, res) {
   try {
-    const time = dayjs().format('YYYY-MM-DD HH:mm:ss');
-
     const user = new User({
       ...req.body,
-      createTime: time,
       createBy: '',
-      updateTime: time,
       updateBy: ''
     });
 
@@ -104,9 +99,7 @@ async function add(req, res) {
 
 async function update(req, res) {
   try {
-    const time = dayjs().format('YYYY-MM-DD HH:mm:ss');
-
-    const user = { ...req.body, updateTime: time, updateBy: '' };
+    const user = { ...req.body, updateBy: '' };
     const { ...updateData } = user;
 
     const update = await User.findByIdAndUpdate(user.id, updateData, {

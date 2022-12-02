@@ -1,6 +1,5 @@
 import boom from '@hapi/boom';
 import Role from '../models/role.js';
-import dayjs from 'dayjs';
 
 import { paramsToSelector } from '../utils/filter.js';
 import pageQuery from '../utils/pagingQuery.js';
@@ -58,13 +57,9 @@ async function queryById(req, res) {
 
 async function add(req, res) {
   try {
-    const time = dayjs().format('YYYY-MM-DD HH:mm:ss');
-
     const role = new Role({
       ...req.body,
-      createTime: time,
       createBy: '',
-      updateTime: time,
       updateBy: ''
     });
 
@@ -76,14 +71,14 @@ async function add(req, res) {
       message: '添加成功!'
     });
   } catch (error) {
+    console.log(error);
     throw boom.boomify(error);
   }
 }
 
 async function update(req, res) {
   try {
-    const time = dayjs().format('YYYY-MM-DD HH:mm:ss');
-    const role = { ...req.body, updateTime: time, updateBy: '' };
+    const role = { ...req.body, updateBy: '' };
     const { ...updateData } = role;
 
     const update = await Role.findByIdAndUpdate(role.id, updateData, {

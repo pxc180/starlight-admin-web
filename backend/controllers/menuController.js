@@ -1,6 +1,5 @@
 import boom from '@hapi/boom';
 import Menu from '../models/menu.js';
-import dayjs from 'dayjs';
 
 import { paramsToSelector } from '../utils/filter.js';
 import { arrayToTree } from '../utils/array.js';
@@ -42,13 +41,9 @@ async function queryAll(req, res) {
 
 async function add(req, res) {
   try {
-    const time = dayjs().format('YYYY-MM-DD HH:mm:ss');
-
     const menu = new Menu({
       ...req.body,
-      createTime: time,
       createBy: '',
-      updateTime: time,
       updateBy: ''
     });
 
@@ -66,8 +61,7 @@ async function add(req, res) {
 
 async function edit(req, res) {
   try {
-    const time = dayjs().format('YYYY-MM-DD HH:mm:ss');
-    const menu = { ...req.body, updateTime: time, updateBy: '' };
+    const menu = { ...req.body, updateBy: '' };
     const { ...updateData } = menu;
 
     const update = await Menu.findByIdAndUpdate(menu.id, updateData, {
