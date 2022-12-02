@@ -86,20 +86,21 @@ const handleOk = async () => {
     }
     await result
       .then((res) => {
-        const { statusCode, message, code } = res
+        const { statusCode, message } = res
         if (statusCode === 200) {
           Message.success(message)
           emits('submit', roleId.value ? undefined : 1)
           handleCancel()
         } else {
-          console.log(code)
-          throw code === 11000 ? '已有该角色编码' : message
+          throw message
         }
       })
       .catch((error) => {
-        console.log(error)
         flag = false
-        Message.warning(`操作失败，${error}`)
+        const { code, message } = error
+        Message.warning(
+          `操作失败，${code === '11000' ? '已有该角色编码' : message || error}`
+        )
       })
       .finally(() => {
         loading.value = false
