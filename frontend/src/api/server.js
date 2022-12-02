@@ -14,8 +14,13 @@ request.interceptors.request.use((config) => {
   return config
 })
 
-request.interceptors.response.use((response) => {
-  return response.data
-})
+request.interceptors.response.use(
+  (response) => {
+    return response.data
+  },
+  (err) => {
+    throw err.response.data
+  }
+)
 
 export { request as axios }
