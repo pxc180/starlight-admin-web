@@ -56,6 +56,7 @@
     >
       <template #columns>
         <a-table-column title="角色名称" data-index="roleName"></a-table-column>
+        <a-table-column title="角色编码" data-index="roleCode"></a-table-column>
         <a-table-column
           title="角色描述"
           data-index="description"

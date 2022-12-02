@@ -17,6 +17,14 @@
       >
         <a-input v-model="form.roleName" placeholder="请输入角色名称" />
       </a-form-item>
+      <a-form-item
+        field="roleCode"
+        label="角色编码"
+        :rules="validatorRules.roleCode.rules"
+        :validate-trigger="validatorRules.roleCode.trigger"
+      >
+        <a-input v-model="form.roleCode" placeholder="请输入角色编码" />
+      </a-form-item>
       <a-form-item field="description" label="描述">
         <a-textarea
           v-model="form.description"
@@ -40,6 +48,10 @@ const validatorRules = {
   roleName: {
     rules: [{ required: true, message: '请填写角色名称!' }],
     trigger: ['change', 'input']
+  },
+  roleCode: {
+    rules: [{ required: true, message: '请填写角色名称!' }],
+    trigger: ['change', 'input']
   }
 }
 
@@ -52,6 +64,7 @@ const formRef = ref(null)
 const roleId = ref(null)
 const form = reactive({
   roleName: '',
+  roleCode: '',
   description: ''
 })
 
@@ -73,16 +86,18 @@ const handleOk = async () => {
     }
     await result
       .then((res) => {
-        const { statusCode, message } = res
+        const { statusCode, message, code } = res
         if (statusCode === 200) {
           Message.success(message)
           emits('submit', roleId.value ? undefined : 1)
           handleCancel()
         } else {
-          throw message
+          console.log(code)
+          throw code === 11000 ? '已有该角色编码' : message
         }
       })
       .catch((error) => {
+        console.log(error)
         flag = false
         Message.warning(`操作失败，${error}`)
       })
