@@ -2,7 +2,8 @@ const roleBody = {
   type: 'object',
   properties: {
     id: { type: 'string' },
-    roleName: { type: 'string', description: '角色名称' }
+    roleName: { type: 'string', description: '角色名称' },
+    roleCode: { type: 'string', description: '角色编码' }
   }
 };
 
@@ -60,6 +61,19 @@ const roleSchema = {
         }
       },
       required: ['id']
+    }
+  },
+  savePermissions: {
+    description: '角色授权',
+    tags: ['role'],
+    summary: '给角色赋予菜单访问权限',
+    body: {
+      type: 'object',
+      properties: {
+        roleId: { type: 'string' },
+        menusId: { type: 'array', description: '菜单ID数组' }
+      },
+      required: ['roleId']
     }
   }
 };

@@ -46,6 +46,14 @@ const roleRoutes = [
       ...roleSchema.delete
     },
     handler: roleController.deleteRole
+  },
+  {
+    method: 'POST',
+    url: getFullPath('/role/savePermissions'),
+    schema: {
+      ...roleSchema.savePermissions
+    },
+    handler: roleController.savePermissions
   }
 ];
 

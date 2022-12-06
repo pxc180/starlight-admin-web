@@ -5,5 +5,14 @@ const queryRoleList = (params) => getAction('/role/queryList', params)
 const deleteRoleById = (params) => deleteAction('/role/deleteById', params)
 const addRole = (params) => postAction('/role/add', params)
 const editRole = (params) => putAction('/role/edit', params)
+const saveRolePermissions = (params) =>
+  postAction('/role/savePermissions', params)
 
-export { queryAllRoleList, queryRoleList, deleteRoleById, addRole, editRole }
+export {
+  queryAllRoleList,
+  queryRoleList,
+  deleteRoleById,
+  addRole,
+  editRole,
+  saveRolePermissions
+}

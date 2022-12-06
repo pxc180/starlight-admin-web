@@ -82,6 +82,9 @@
             >
               <a-button type="text"> 删除 </a-button>
             </a-popconfirm>
+            <a-button @click="onAwardedPermissions(record)" type="text">
+              授权
+            </a-button>
           </template>
         </a-table-column>
       </template>
@@ -95,6 +98,7 @@
       "
     ></RoleFormModal>
     <RoleUserModal ref="userListRef"></RoleUserModal>
+    <SetRolePermissionsVue ref="setPermissionsRef"></SetRolePermissionsVue>
   </a-card>
 </template>
 
@@ -103,7 +107,8 @@ import { ref } from 'vue'
 import usePageList from '@/hooks/usePageList'
 import { queryRoleList, deleteRoleById } from '@/api/modules/role'
 import RoleFormModal from './components/roleFormModal.vue'
-import RoleUserModal from './components/RoleUserModal.vue'
+import RoleUserModal from './components/roleUserModal.vue'
+import SetRolePermissionsVue from './components/setRolePermissions.vue'
 
 const {
   form,
@@ -126,9 +131,13 @@ const {
 })
 
 const userListRef = ref(null)
+const setPermissionsRef = ref(null)
 
 const onCheckRoleUser = (record) => {
   userListRef.value.onShow(record._id)
+}
+const onAwardedPermissions = (record) => {
+  setPermissionsRef.value.onShow(record._id)
 }
 </script>
 

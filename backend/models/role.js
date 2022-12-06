@@ -9,7 +9,8 @@ const roleSchema = new Schema(
     createTime: String,
     createBy: String,
     updateTime: String,
-    updateBy: String
+    updateBy: String,
+    menuIds: [Schema.Types.ObjectId]
   },
   {
     versionKey: false,

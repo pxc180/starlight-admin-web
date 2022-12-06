@@ -110,4 +110,27 @@ async function deleteRole(req, res) {
   }
 }
 
-export default { queryAll, queryList, queryById, add, update, deleteRole };
+async function savePermissions(req, res) {
+  try {
+    const { roleId, menuIds } = req.body;
+    await Role.updateOne({ _id: roleId }, { $set: { menuIds: menuIds } });
+
+    res.send({
+      statusCode: res.statusCode,
+      data: roleId,
+      message: '操作成功!'
+    });
+  } catch (error) {
+    throw boom.boomify(error);
+  }
+}
+
+export default {
+  queryAll,
+  queryList,
+  queryById,
+  add,
+  update,
+  deleteRole,
+  savePermissions
+};
