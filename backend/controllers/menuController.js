@@ -1,9 +1,27 @@
 import boom from '@hapi/boom';
 import Menu from '../models/menu.js';
+import Role from '../models/role.js';
 
 import { paramsToSelector } from '../utils/filter.js';
 import { arrayToTree } from '../utils/array.js';
 import { getTreeDeleteIds } from '../utils/tree.js';
+
+async function getMenuTree(queryParams) {
+  const menu = await Menu.find(queryParams).sort({ sortNo: 0 });
+
+  let result = [];
+
+  if (Object.keys(queryParams).length) {
+    result = menu;
+  } else {
+    result = arrayToTree({
+      arr: menu,
+      fieldsNames: { id: '_id', pid: 'parentId', children: 'children' }
+    });
+  }
+
+  return result;
+}
 
 async function queryAll(req, res) {
   try {
@@ -11,32 +29,34 @@ async function queryAll(req, res) {
 
     const queryParams = paramsToSelector(conditions);
 
-    const menu = await Menu.find(queryParams).sort({ sortNo: 0 });
-
-    let result = [];
-
-    if (Object.keys(queryParams).length) {
-      result = menu;
-    } else {
-      result = arrayToTree({
-        arr: menu,
-        fieldsNames: { id: '_id', pid: 'parentId', children: 'children' }
-      });
-    }
+    const menu = await getMenuTree(queryParams);
 
     res.send({
       statusCode: res.statusCode,
       data: {
-        result,
+        result: menu,
         current: 1,
-        size: result.length,
-        total: result.length
+        size: menu.length,
+        total: menu.length
       },
       message: '操作成功!'
     });
   } catch (error) {
     throw boom.boomify(error);
   }
+}
+async function queryMenuByRoleId(req, res) {
+  const menu = await getMenuTree({});
+  const role = await Role.findOne({ _id: req.query.roleId }, { menuIds: 1 });
+
+  res.send({
+    statusCode: res.statusCode,
+    data: {
+      selected: role.menuIds,
+      menus: menu
+    },
+    message: '操作成功!'
+  });
 }
 
 async function add(req, res) {
@@ -107,4 +127,4 @@ async function deleteMenu(req, res) {
   }
 }
 
-export default { queryAll, add, edit, deleteMenu };
+export default { queryAll, add, edit, deleteMenu, queryMenuByRoleId };

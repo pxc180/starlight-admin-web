@@ -46,6 +46,16 @@ const menuSchema = {
       ...menuBody,
       required: ['id']
     }
+  },
+  queryMenuByRoleId: {
+    description: '查询所有菜单以及角色拥有的菜单权限',
+    tags: ['menu'],
+    summary: '查询所有菜单以及角色拥有的菜单权限',
+    querystring: {
+      type: 'object',
+      properties: { roleId: { type: 'string', description: '角色Id' } },
+      required: ['roleId']
+    }
   }
 };
 

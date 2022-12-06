@@ -2,7 +2,6 @@
   <a-drawer
     :width="480"
     :mask-closable="false"
-    :unmount-on-close="true"
     v-model:visible="visible"
     :ok-loading="loading"
     :on-before-ok="handleOk"
@@ -30,7 +29,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { queryAllMenu } from '@/api/modules/menu'
+import { queryMenuByRoleId } from '@/api/modules/menu'
 import { saveRolePermissions } from '@/api/modules/role'
 import { Message } from '@arco-design/web-vue'
 
@@ -46,10 +45,16 @@ const roleId = ref('')
 const onShow = (id) => {
   visible.value = true
   roleId.value = id
-  queryAllMenu()
+  queryMenuByRoleId({ roleId: id })
     .then((res) => {
-      menusTree.value = res.data.result
-      treeSwitch.value = true
+      const { statusCode, message } = res
+      if (statusCode === 200) {
+        menusTree.value = res.data.menus
+        checkedKeys.value = res.data.selected
+        treeSwitch.value = true
+      } else {
+        throw message
+      }
     })
     .catch((error) => {
       Message.warning(`操作失败，${error}`)
@@ -79,6 +84,7 @@ const handleOk = () => {
 const handleCancel = () => {
   roleId.value = ''
   checkedKeys.value = []
+  visible.value = false
 }
 
 defineExpose({

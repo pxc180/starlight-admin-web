@@ -32,6 +32,14 @@ const menuRoutes = [
       ...menuSchema.delete
     },
     handler: menuController.deleteMenu
+  },
+  {
+    method: 'GET',
+    url: getFullPath('/menu/queryMenuByRoleId'),
+    schema: {
+      ...menuSchema.queryMenuByRoleId
+    },
+    handler: menuController.queryMenuByRoleId
   }
 ];
 
