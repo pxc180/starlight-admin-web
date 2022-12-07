@@ -45,6 +45,7 @@ async function queryAll(req, res) {
     throw boom.boomify(error);
   }
 }
+
 async function queryMenuByRoleId(req, res) {
   const menu = await getMenuTree({});
   const role = await Role.findOne({ _id: req.query.roleId }, { menuIds: 1 });
@@ -105,6 +106,20 @@ async function deleteMenu(req, res) {
     const ids = await getTreeDeleteIds(Menu, id);
 
     if (ids && ids.length) {
+      let role = await Role.find({ menuIds: { $in: ids } });
+      let roleBulk = role.map(item => ({
+        updateOne: {
+          filter: {
+            _id: { $eq: item._id }
+          },
+          update: {
+            $set: {
+              menuIds: item.menuIds.filter(v => !ids.includes(v))
+            }
+          }
+        }
+      }));
+      await Role.bulkWrite([...roleBulk], { ordered: false });
       await Menu.bulkWrite(
         [{ deleteMany: { filter: { _id: { $in: ids } } } }],
         { ordered: false }
