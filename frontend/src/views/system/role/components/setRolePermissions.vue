@@ -60,14 +60,17 @@ const onShow = (id) => {
       Message.warning(`操作失败，${error}`)
     })
 }
-const handleOk = () => {
-  saveRolePermissions({
+const handleOk = async () => {
+  let flag = false
+  loading.value = true
+  await saveRolePermissions({
     roleId: roleId.value,
     menuIds: checkedKeys.value
   })
     .then((res) => {
       const { statusCode, message } = res
       if (statusCode === 200) {
+        flag = true
         Message.success(message)
         handleCancel()
       } else {
@@ -80,6 +83,8 @@ const handleOk = () => {
     .finally(() => {
       loading.value = false
     })
+
+  return flag
 }
 const handleCancel = () => {
   roleId.value = ''
