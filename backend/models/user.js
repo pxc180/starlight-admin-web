@@ -3,7 +3,8 @@ import dayjs from 'dayjs';
 
 const userSchema = new Schema(
   {
-    userName: String,
+    userName: { type: String, unique: true },
+    realName: String,
     createTime: String,
     createBy: String,
     updateTime: String,

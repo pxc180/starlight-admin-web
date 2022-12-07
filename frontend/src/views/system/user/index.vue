@@ -55,7 +55,8 @@
       @page-size-change="onPageSizeChange"
     >
       <template #columns>
-        <a-table-column title="用户姓名" data-index="userName"></a-table-column>
+        <a-table-column title="账号" data-index="userName"></a-table-column>
+        <a-table-column title="用户姓名" data-index="realName"></a-table-column>
         <a-table-column
           title="所属角色"
           data-index="roleId.roleName"

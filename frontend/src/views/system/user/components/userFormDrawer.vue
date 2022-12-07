@@ -11,11 +11,19 @@
     <a-form :model="form" ref="formRef">
       <a-form-item
         field="userName"
-        label="用户姓名"
+        label="账号"
         :rules="validatorRules.userName.rules"
         :validate-trigger="validatorRules.userName.trigger"
       >
-        <a-input v-model="form.userName" placeholder="请输入用户姓名" />
+        <a-input v-model="form.userName" placeholder="请填写账号" />
+      </a-form-item>
+      <a-form-item
+        field="realName"
+        label="姓名"
+        :rules="validatorRules.realName.rules"
+        :validate-trigger="validatorRules.realName.trigger"
+      >
+        <a-input v-model="form.realName" placeholder="请填写用户姓名" />
       </a-form-item>
       <a-form-item
         field="roleId"
@@ -63,6 +71,10 @@ const validatorRules = {
     rules: [{ required: true, message: '请填写用户姓名!' }],
     trigger: ['change', 'input']
   },
+  realName: {
+    rules: [{ required: true, message: '请填写账号!' }],
+    trigger: ['change', 'input']
+  },
   roleId: {
     rules: [{ required: true, message: '请选择所属角色!' }],
     trigger: ['change', 'input']
@@ -78,6 +90,7 @@ const formRef = ref(null)
 const userId = ref(null)
 const form = reactive({
   userName: '',
+  realName: '',
   roleId: ''
 })
 
@@ -110,7 +123,10 @@ const handleOk = async () => {
       })
       .catch((error) => {
         flag = false
-        Message.warning(`操作失败，${error}`)
+        const { code, message } = error
+        Message.warning(
+          `操作失败，${code === '11000' ? '该账号已存在' : message || error}`
+        )
       })
       .finally(() => {
         loading.value = false
@@ -130,6 +146,7 @@ const onEdit = (record) => {
   onShow()
   userId.value = record._id
   form.userName = record.userName
+  form.realName = record.realName
   form.roleId = record.roleId._id
 }
 
