@@ -15,6 +15,9 @@ async function getList(req, res) {
       pageNo,
       pageSize,
       queryParams: paramsToSelector(conditions),
+      returnFields: {
+        password: 0
+      },
       sortParams: { createTime: -1 },
       populateParams: { path: 'roleId', select: { id: 1, roleName: 1 } }
     });
@@ -41,6 +44,9 @@ async function queryByRoleId(req, res) {
         roleId: mongoose.Types.ObjectId(roleId),
         ...paramsToSelector(conditions)
       },
+      returnFields: {
+        password: 0
+      },
       sortParams: { createTime: -1 },
       populateParams: { path: 'roleId', select: { id: 1, roleName: 1 } }
     });
@@ -58,7 +64,9 @@ async function queryByRoleId(req, res) {
 async function get(req, res) {
   try {
     const id = req.query.id;
-    const user = await User.findById(id);
+    const user = await User.findById(id, {
+      password: 0
+    });
     if (user) {
       res.send({
         statusCode: res.statusCode,

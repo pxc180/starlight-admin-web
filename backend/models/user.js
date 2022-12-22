@@ -5,6 +5,7 @@ const userSchema = new Schema(
   {
     userName: { type: String, unique: true },
     realName: String,
+    password: { type: String, default: '123456' },
     createTime: String,
     createBy: String,
     updateTime: String,
