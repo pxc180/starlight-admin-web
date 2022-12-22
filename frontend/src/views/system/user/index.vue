@@ -5,8 +5,8 @@
         <a-form :model="form" ref="formRef">
           <a-row :gutter="16">
             <a-col :span="8">
-              <a-form-item field="userName" label="用户姓名">
-                <a-input v-model="form.userName" placeholder="请输入" />
+              <a-form-item field="realName" label="用户姓名">
+                <a-input v-model="form.realName" placeholder="请输入" />
               </a-form-item>
             </a-col>
             <a-col :span="8">
@@ -111,7 +111,7 @@ const {
   onEdit,
   onDelete
 } = usePageList({
-  searchForm: { userName: '', createTime: '' },
+  searchForm: { realName: '', createTime: '' },
   api: { list: queryUserList, deleteById: deleteUserById }
 })
 </script>
