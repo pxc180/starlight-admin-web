@@ -5,7 +5,7 @@
     v-model:visible="visible"
     :ok-loading="loading"
     :on-before-ok="handleOk"
-    @cancel="handleCancel"
+    @close="handleClose"
   >
     <template #title> {{ title }} </template>
     <a-form :model="form" ref="formRef">
@@ -17,6 +17,29 @@
       >
         <a-input v-model="form.userName" placeholder="请填写账号" />
       </a-form-item>
+
+      <template v-if="!userId">
+        <a-form-item
+          field="password"
+          label="密码"
+          :rules="validatorRules.password.rules"
+          :validate-trigger="validatorRules.password.trigger"
+        >
+          <a-input v-model="form.password" placeholder="请填写密码" />
+        </a-form-item>
+        <a-form-item
+          field="confirmPassword"
+          label="确认密码"
+          :rules="validatorRules.confirmPassword.rules"
+          :validate-trigger="validatorRules.confirmPassword.trigger"
+        >
+          <a-input
+            v-model="form.confirmPassword"
+            placeholder="请重新填写密码"
+          />
+        </a-form-item>
+      </template>
+
       <a-form-item
         field="realName"
         label="姓名"
@@ -49,8 +72,6 @@ import { onMounted, reactive, ref, toRaw } from 'vue'
 import { addUser, editUser } from '@/api/modules/user'
 import { queryAllRoleList } from '@/api/modules/role'
 
-const replaceFields = { value: '_id', label: 'roleName' }
-const roleDict = ref([])
 onMounted(() => {
   queryAllRoleList()
     .then((res) => {
@@ -66,9 +87,34 @@ onMounted(() => {
     })
 })
 
+const replaceFields = { value: '_id', label: 'roleName' }
+const roleDict = ref([])
+
+const passwordValidator = (value, call) => {
+  if (value !== form.password || value !== form.confirmPassword) {
+    call('两次密码不一致，请重新输入！')
+  } else {
+    formRef.value.clearValidate(['password', 'confirmPassword'])
+  }
+}
+
 const validatorRules = {
   userName: {
     rules: [{ required: true, message: '请填写用户姓名!' }],
+    trigger: ['change', 'input']
+  },
+  password: {
+    rules: [
+      { required: true, message: '请输入账号密码!' },
+      { validator: passwordValidator }
+    ],
+    trigger: ['change', 'input']
+  },
+  confirmPassword: {
+    rules: [
+      { required: true, message: '请重新输入账号密码!' },
+      { validator: passwordValidator }
+    ],
     trigger: ['change', 'input']
   },
   realName: {
@@ -91,7 +137,9 @@ const userId = ref(null)
 const form = reactive({
   userName: '',
   realName: '',
-  roleId: ''
+  roleId: '',
+  password: '',
+  confirmPassword: ''
 })
 
 const handleOk = async () => {
@@ -116,7 +164,7 @@ const handleOk = async () => {
         if (statusCode === 200) {
           Message.success(message)
           emits('submit', userId.value ? undefined : 1)
-          handleCancel()
+          handleClose()
         } else {
           throw message
         }
@@ -134,9 +182,10 @@ const handleOk = async () => {
   }
   return flag
 }
-const handleCancel = () => {
-  userId.value = null
+
+const handleClose = () => {
   formRef.value.resetFields()
+  userId.value = null
 }
 
 const onShow = () => {
