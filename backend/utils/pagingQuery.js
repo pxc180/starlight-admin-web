@@ -3,6 +3,7 @@ export default async function pageQuery({
   pageNo = 1,
   pageSize = 10,
   queryParams = {},
+  returnFields = {},
   sortParams = {},
   populateParams = ''
 } = {}) {
@@ -14,7 +15,7 @@ export default async function pageQuery({
     pageSize && Number.isInteger(+pageSize) && pageSize > 0 ? +pageSize : 10;
   const total = await model.count(queryParams);
   const result = await model
-    .find(queryParams)
+    .find(queryParams, returnFields)
     .skip((no - 1) * size)
     .limit(size)
     .populate(populateParams)
