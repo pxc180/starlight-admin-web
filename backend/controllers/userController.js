@@ -6,6 +6,8 @@ import User from '../models/user.js';
 import { paramsToSelector } from '../utils/filter.js';
 import pageQuery from '../utils/pagingQuery.js';
 
+import fastify from '../fastify.js';
+
 async function getList(req, res) {
   try {
     const { pageNo, pageSize, _t, ...conditions } = req.query;
@@ -146,4 +148,46 @@ async function deleteUser(req, res) {
   }
 }
 
-export default { getList, queryByRoleId, get, add, update, deleteUser };
+async function userLogin(req, res) {
+  try {
+    const { userName, password } = req.query;
+    const user = await User.find({ userName: userName });
+    if (!user.length) {
+      res.send({
+        statusCode: 500,
+        data: null,
+        success: false,
+        message: '该用户不存在，请注册'
+      });
+      return;
+    }
+    if (user[0].password !== password) {
+      res.send({
+        statusCode: 500,
+        data: null,
+        success: false,
+        message: '账号或密码错误'
+      });
+      return;
+    }
+    const token = fastify.jwt.sign({ ...user });
+    res.send({
+      statusCode: res.statusCode,
+      data: { token: token, userInfo: user[0] },
+      success: true,
+      message: '登录成功'
+    });
+  } catch (error) {
+    throw boom.boomify(error);
+  }
+}
+
+export default {
+  getList,
+  queryByRoleId,
+  get,
+  add,
+  update,
+  deleteUser,
+  userLogin
+};

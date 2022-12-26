@@ -66,6 +66,23 @@ const userSchema = {
       },
       required: ['id']
     }
+  },
+  login: {
+    description: '用户登录',
+    tags: ['user'],
+    summary: '通过账号和密码登录',
+    querystring: {
+      type: 'object',
+      properties: {
+        userName: {
+          type: 'string'
+        },
+        password: {
+          type: 'string'
+        }
+      },
+      required: ['userName', 'password']
+    }
   }
 };
 

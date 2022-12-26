@@ -13,9 +13,16 @@ const userStore = useUserStore()
 
 const login = async () => {
   try {
-    await userStore.login()
-    router.push('/dashboard')
-    Message.success('欢迎使用')
+    const { success, message } = await userStore.login({
+      userName: 'admin',
+      password: '123456'
+    })
+    if (success) {
+      router.push('/dashboard')
+      Message.success('欢迎使用')
+    } else {
+      Message.error(message + '!')
+    }
   } catch (error) {}
 }
 </script>

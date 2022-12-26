@@ -50,6 +50,12 @@ const userRoutes = [
       ...userSchema.delete
     },
     handler: userController.deleteUser
+  },
+  {
+    method: 'GET',
+    url: getFullPath('/user/login'),
+    schema: { ...userSchema.login },
+    handler: userController.userLogin
   }
 ];
 
