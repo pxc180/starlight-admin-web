@@ -122,6 +122,7 @@ const onEdit = (record) => {
   onShow()
   roleId.value = record._id
   form.roleName = record.roleName
+  form.roleCode = record.roleCode
   form.description = record.description
 }
 
