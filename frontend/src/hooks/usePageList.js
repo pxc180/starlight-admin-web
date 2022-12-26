@@ -51,7 +51,7 @@ export default function usePageList({
         }
       })
       .catch((error) => {
-        Message.warning(`操作失败，${error}`)
+        Message.warning(`操作失败，${error.message || error}`)
       })
       .finally(() => {
         loading.value = false
