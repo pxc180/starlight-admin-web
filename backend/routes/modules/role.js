@@ -1,18 +1,21 @@
 import roleSchema from '../../docs/role.js';
 import roleController from '../../controllers/roleController.js';
 import { getFullPath } from '../config.js';
+import fastify from '../../fastify.js';
 
 const roleRoutes = [
   {
     method: 'GET',
     url: getFullPath('/role/queryAll'),
     schema: { ...roleSchema.queryAll },
+    onRequest: [fastify.authenticate],
     handler: roleController.queryAll
   },
   {
     method: 'GET',
     url: getFullPath('/role/queryList'),
     schema: { ...roleSchema.queryList },
+    onRequest: [fastify.authenticate],
     handler: roleController.queryList
   },
   {
@@ -21,6 +24,7 @@ const roleRoutes = [
     schema: {
       ...roleSchema.queryById
     },
+    onRequest: [fastify.authenticate],
     handler: roleController.queryById
   },
   {
@@ -29,6 +33,7 @@ const roleRoutes = [
     schema: {
       ...roleSchema.add
     },
+    onRequest: [fastify.authenticate],
     handler: roleController.add
   },
   {
@@ -37,6 +42,7 @@ const roleRoutes = [
     schema: {
       ...roleSchema.update
     },
+    onRequest: [fastify.authenticate],
     handler: roleController.update
   },
   {
@@ -45,6 +51,7 @@ const roleRoutes = [
     schema: {
       ...roleSchema.delete
     },
+    onRequest: [fastify.authenticate],
     handler: roleController.deleteRole
   },
   {
@@ -53,6 +60,7 @@ const roleRoutes = [
     schema: {
       ...roleSchema.savePermissions
     },
+    onRequest: [fastify.authenticate],
     handler: roleController.savePermissions
   }
 ];

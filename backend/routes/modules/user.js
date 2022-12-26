@@ -1,6 +1,7 @@
 import userSchema from '../../docs/user.js';
 import userController from '../../controllers/userController.js';
 import { getFullPath } from '../config.js';
+import fastify from '../../fastify.js';
 
 const userRoutes = [
   {
@@ -9,6 +10,7 @@ const userRoutes = [
     schema: {
       ...userSchema.list
     },
+    onRequest: [fastify.authenticate],
     handler: userController.getList
   },
   {
@@ -17,6 +19,7 @@ const userRoutes = [
     schema: {
       ...userSchema.queryByRoleId
     },
+    onRequest: [fastify.authenticate],
     handler: userController.queryByRoleId
   },
   {
@@ -25,6 +28,7 @@ const userRoutes = [
     schema: {
       ...userSchema.detail
     },
+    onRequest: [fastify.authenticate],
     handler: userController.get
   },
   {
@@ -33,6 +37,7 @@ const userRoutes = [
     schema: {
       ...userSchema.add
     },
+    onRequest: [fastify.authenticate],
     handler: userController.add
   },
   {
@@ -41,6 +46,7 @@ const userRoutes = [
     schema: {
       ...userSchema.update
     },
+    onRequest: [fastify.authenticate],
     handler: userController.update
   },
   {
@@ -49,6 +55,7 @@ const userRoutes = [
     schema: {
       ...userSchema.delete
     },
+    onRequest: [fastify.authenticate],
     handler: userController.deleteUser
   },
   {

@@ -1,12 +1,14 @@
 import menuController from '../../controllers/menuController.js';
 import menuSchema from '../../docs/menu.js';
 import { getFullPath } from '../config.js';
+import fastify from '../../fastify.js';
 
 const menuRoutes = [
   {
     method: 'GET',
     url: getFullPath('/menu/queryAll'),
     schema: { ...menuSchema.queryAll },
+    onRequest: [fastify.authenticate],
     handler: menuController.queryAll
   },
   {
@@ -15,6 +17,7 @@ const menuRoutes = [
     schema: {
       ...menuSchema.add
     },
+    onRequest: [fastify.authenticate],
     handler: menuController.add
   },
   {
@@ -23,6 +26,7 @@ const menuRoutes = [
     schema: {
       ...menuSchema.edit
     },
+    onRequest: [fastify.authenticate],
     handler: menuController.edit
   },
   {
@@ -31,6 +35,7 @@ const menuRoutes = [
     schema: {
       ...menuSchema.delete
     },
+    onRequest: [fastify.authenticate],
     handler: menuController.deleteMenu
   },
   {
@@ -39,6 +44,7 @@ const menuRoutes = [
     schema: {
       ...menuSchema.queryMenuByRoleId
     },
+    onRequest: [fastify.authenticate],
     handler: menuController.queryMenuByRoleId
   }
 ];
