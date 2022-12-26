@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getToken } from '@/utils/auth'
 
 const apiBaseUrl = '/api'
 
@@ -8,6 +9,10 @@ const request = axios.create({
 })
 
 request.interceptors.request.use((config) => {
+  const token = getToken()
+  if (token) {
+    config.headers.authorization = 'Bearer ' + token
+  }
   if (config.method === 'get') {
     config.params = { _t: Date.parse(new Date()) / 1000, ...config.params }
   }
