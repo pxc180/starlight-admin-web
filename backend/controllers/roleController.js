@@ -57,10 +57,11 @@ async function queryById(req, res) {
 
 async function add(req, res) {
   try {
+    const actionUser = req.user['0'];
+
     const role = new Role({
       ...req.body,
-      createBy: '',
-      updateBy: ''
+      createBy: actionUser._id
     });
 
     await role.save();
@@ -78,7 +79,9 @@ async function add(req, res) {
 
 async function update(req, res) {
   try {
-    const role = { ...req.body, updateBy: '' };
+    const actionUser = req.user['0'];
+
+    const role = { ...req.body, updateBy: actionUser._id };
     const { ...updateData } = role;
 
     const update = await Role.findByIdAndUpdate(role.id, updateData, {
@@ -112,8 +115,13 @@ async function deleteRole(req, res) {
 
 async function savePermissions(req, res) {
   try {
+    const actionUser = req.user['0'];
+
     const { roleId, menuIds } = req.body;
-    await Role.updateOne({ _id: roleId }, { $set: { menuIds: menuIds } });
+    await Role.updateOne(
+      { _id: roleId },
+      { $set: { menuIds: menuIds, updateBy: actionUser._id } }
+    );
 
     res.send({
       statusCode: res.statusCode,

@@ -89,10 +89,10 @@ async function get(req, res) {
 
 async function add(req, res) {
   try {
+    const actionUser = req.user['0'];
     const user = new User({
       ...req.body,
-      createBy: '',
-      updateBy: ''
+      createBy: actionUser._id
     });
 
     await user.save();
@@ -109,7 +109,8 @@ async function add(req, res) {
 
 async function update(req, res) {
   try {
-    const user = { ...req.body, updateBy: '' };
+    const actionUser = req.user['0'];
+    const user = { ...req.body, updateBy: actionUser._id };
     const { ...updateData } = user;
 
     const update = await User.findByIdAndUpdate(user.id, updateData, {

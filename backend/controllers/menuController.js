@@ -62,10 +62,10 @@ async function queryMenuByRoleId(req, res) {
 
 async function add(req, res) {
   try {
+    const actionUser = req.user['0'];
     const menu = new Menu({
       ...req.body,
-      createBy: '',
-      updateBy: ''
+      createBy: actionUser._id
     });
 
     await menu.save();
@@ -82,7 +82,8 @@ async function add(req, res) {
 
 async function edit(req, res) {
   try {
-    const menu = { ...req.body, updateBy: '' };
+    const actionUser = req.user['0'];
+    const menu = { ...req.body, updateBy: actionUser._id };
     const { ...updateData } = menu;
 
     const update = await Menu.findByIdAndUpdate(menu.id, updateData, {
