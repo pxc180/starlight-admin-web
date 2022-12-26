@@ -1,18 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import Fastify from 'fastify';
 import mongoose from 'mongoose';
-import fastifySwagger from '@fastify/swagger';
-import fastifyUi from '@fastify/swagger-ui';
-import { options as swagger } from './config/swagger.js';
-
-const fastify = new Fastify({
-  logger: { level: 'info' }
-  // logger: { level: 'info', file: '../fastity.log' }
-});
-
-await fastify.register(fastifySwagger);
-await fastify.register(fastifyUi, swagger);
+import fastify from './fastify.js';
 
 mongoose
   .connect('mongodb://localhost/starlight-admin-dataBase')
