@@ -4,32 +4,53 @@
       <div class="logo"></div>
       <h2>Starlight Admin Web</h2>
     </div>
-    <div class="right-header">
-      <a-tooltip
-        :content="`点击切换为${theme === 'light' ? '暗黑' : '亮色'}模式`"
-      >
-        <a-button
-          class="nav-btn"
-          type="outline"
-          shape="circle"
-          @click="toggleTheme()"
+    <ul class="right-header">
+      <li>
+        <a-tooltip
+          :content="`点击切换为${theme === 'light' ? '暗黑' : '亮色'}模式`"
         >
-          <template #icon>
-            <icon-sun-fill v-if="theme === 'dark'" />
-            <icon-moon-fill v-else />
+          <a-button
+            class="nav-btn"
+            type="outline"
+            shape="circle"
+            @click="toggleTheme()"
+          >
+            <template #icon>
+              <icon-sun-fill v-if="theme === 'dark'" />
+              <icon-moon-fill v-else />
+            </template>
+          </a-button>
+        </a-tooltip>
+      </li>
+      <li>
+        <a-dropdown position="br">
+          <a-avatar :size="32" :style="{ backgroundColor: '#3370ff' }">
+            <IconUser />
+          </a-avatar>
+          <template #content>
+            <a-doption @click="handleLogout">
+              <template #icon>
+                <IconExport />
+              </template>
+              <template #default>退出登录</template>
+            </a-doption>
           </template>
-        </a-button>
-      </a-tooltip>
-    </div>
+        </a-dropdown>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script setup>
+import { IconUser, IconExport } from '@arco-design/web-vue/es/icon'
 import { computed } from 'vue'
 import { useDark, useToggle } from '@vueuse/core'
-import { useAppStore } from '@/store'
+import { useRouter } from 'vue-router'
+import { useAppStore, useUserStore } from '@/store'
 
 const appStore = useAppStore()
+const userStore = useUserStore()
+const router = useRouter()
 
 const theme = computed(() => {
   return appStore.theme
@@ -47,6 +68,13 @@ const isDark = useDark({
 })
 
 const toggleTheme = useToggle(isDark)
+
+const handleLogout = async () => {
+  try {
+    await userStore.logout()
+    router.push('/login')
+  } catch (error) {}
+}
 </script>
 
 <style scoped lang="less">
@@ -72,7 +100,12 @@ const toggleTheme = useToggle(isDark)
   .right-header {
     display: flex;
     align-items: center;
+    list-style: none;
+    margin-right: 2px;
 
+    li {
+      padding: 0 10px;
+    }
     .nav-btn {
       border-color: rgb(var(--gray-2));
       color: rgb(var(--gray-8));

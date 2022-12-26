@@ -4,13 +4,16 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { setToken } from '@/utils/auth'
+import { useUserStore } from '@/store'
 
 const router = useRouter()
+const userStore = useUserStore()
 
-const login = () => {
-  setToken('token12345')
-  router.push('/dashboard')
+const login = async () => {
+  try {
+    await userStore.login()
+    router.push('/dashboard')
+  } catch (error) {}
 }
 </script>
 
