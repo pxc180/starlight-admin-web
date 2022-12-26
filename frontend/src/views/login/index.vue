@@ -6,6 +6,8 @@
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/store'
 
+import { Message } from '@arco-design/web-vue'
+
 const router = useRouter()
 const userStore = useUserStore()
 
@@ -13,6 +15,7 @@ const login = async () => {
   try {
     await userStore.login()
     router.push('/dashboard')
+    Message.success('欢迎使用')
   } catch (error) {}
 }
 </script>

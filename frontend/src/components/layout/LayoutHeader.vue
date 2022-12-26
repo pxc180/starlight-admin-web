@@ -48,6 +48,8 @@ import { useDark, useToggle } from '@vueuse/core'
 import { useRouter } from 'vue-router'
 import { useAppStore, useUserStore } from '@/store'
 
+import { Message } from '@arco-design/web-vue'
+
 const appStore = useAppStore()
 const userStore = useUserStore()
 const router = useRouter()
@@ -73,6 +75,7 @@ const handleLogout = async () => {
   try {
     await userStore.logout()
     router.push('/login')
+    Message.success('登出成功')
   } catch (error) {}
 }
 </script>
