@@ -4,7 +4,6 @@ import fastifyUi from '@fastify/swagger-ui';
 import fastifyJwt from '@fastify/jwt';
 import fastifyPlugin from 'fastify-plugin';
 import { options as swagger } from './config/swagger.js';
-import boom from '@hapi/boom';
 
 const fastify = new Fastify({
   logger: { level: 'info' }
@@ -14,7 +13,18 @@ const fastify = new Fastify({
 await fastify.register(fastifySwagger);
 await fastify.register(fastifyUi, swagger);
 await fastify.register(fastifyJwt, {
-  secret: 'supersecret'
+  secret: 'supersecret',
+  sign: {
+    expiresIn: '24h'
+  },
+  messages: {
+    badRequestErrorMessage: 'Token格式有误，正确格式为: Bearer [token]',
+    noAuthorizationInHeaderMessage: '未登录，请登录后重试',
+    authorizationTokenExpiredMessage: '登录状态已过期',
+    authorizationTokenInvalid: err => {
+      return `无效Token: ${err.message}`;
+    }
+  }
 });
 await fastify.register(
   fastifyPlugin(async function (fastify, options) {
@@ -27,13 +37,5 @@ await fastify.register(
     });
   })
 );
-
-// fastify.addHook('onRequest', async (req, reply) => {
-//   try {
-//     await req.jwtVerify();
-//   } catch (error) {
-//     throw boom.boomify(error);
-//   }
-// });
 
 export default fastify;
