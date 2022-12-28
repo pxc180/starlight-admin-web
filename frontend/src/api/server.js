@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getToken } from '@/utils/auth'
+import { getToken, clearToken, needLoginModal } from '@/utils/auth'
 
 const apiBaseUrl = '/api'
 
@@ -24,7 +24,19 @@ request.interceptors.response.use(
     return response.data
   },
   (err) => {
-    throw err.response.data
+    const { statusCode, code } = err.response.data
+    if (
+      statusCode === 401 ||
+      code.includes('JWT_INVALID') ||
+      code.includes('JWT_MALFORMED')
+    ) {
+      needLoginModal(function () {
+        clearToken()
+        window.location.reload()
+      })
+    }
+
+    return Promise.reject(err.response.data)
   }
 )
 

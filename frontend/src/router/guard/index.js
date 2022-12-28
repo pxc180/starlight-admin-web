@@ -1,24 +1,15 @@
-import { isLogin } from '@/utils/auth'
-import { Modal } from '@arco-design/web-vue'
-import { useAppStore } from '@/store'
+import { isLogin, needLoginModal } from '@/utils/auth'
 
-function needLoginModal(router) {
-  Modal.info({
-    title: '登录过期',
-    content: '用户未登录或登录状态已过期!',
-    okText: '返回登录',
-    alignCenter: false,
-    modalClass: 'need-login-modal',
-    onOk: () => {
-      router.push('/login')
-    }
-  })
-}
+import { useAppStore } from '@/store'
 
 function setupServerPermissionGuard(router) {
   router.beforeEach((to, from, next) => {
     const appStore = useAppStore()
-    if (appStore.menuFromServer && !appStore.serverMenu.length) {
+    if (
+      to.name !== 'login' &&
+      appStore.menuFromServer &&
+      !appStore.serverMenu.length
+    ) {
       appStore.getServerMenu().then((result) => {
         result.forEach((item) => {
           router.addRoute('root', item)
@@ -28,7 +19,16 @@ function setupServerPermissionGuard(router) {
           name: 'notFound',
           component: () => import('@/views/notFound/index.vue')
         })
-        next({ ...to, replace: true })
+
+        const redirect = decodeURIComponent(from.query.redirect || to.path)
+        if (to.path === redirect) {
+          next({ ...to, replace: true })
+        } else {
+          next({
+            path: redirect,
+            replace: true
+          })
+        }
       })
     } else {
       next()
@@ -46,10 +46,13 @@ function setupPermissionGuard(router) {
       }
     } else {
       if (to.meta.requireAuth) {
-        needLoginModal(router)
-        return undefined
-      } else {
+        needLoginModal(function () {
+          router.push({ path: '/login', query: { redirect: to.fullPath } })
+        })
+      } else if (to.matched.length) {
         next()
+      } else {
+        next({ path: '/login', query: { redirect: to.fullPath } })
       }
     }
   })
