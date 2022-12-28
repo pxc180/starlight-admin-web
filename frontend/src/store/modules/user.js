@@ -23,12 +23,14 @@ const useUserStore = defineStore('user', {
     async login(params) {
       try {
         const { success, data, message } = await userLogin(params)
-        setToken(data.token)
-        this.setInfo({
-          userName: data.userInfo.userName,
-          realName: data.userInfo.realName,
-          roleId: data.userInfo.roleId
-        })
+        if (success) {
+          setToken(data.token)
+          this.setInfo({
+            userName: data.userInfo.userName,
+            realName: data.userInfo.realName,
+            roleId: data.userInfo.roleId
+          })
+        }
         return { success, message }
       } catch (err) {
         clearToken()
