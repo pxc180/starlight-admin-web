@@ -6,6 +6,7 @@ const deleteUserById = (params) => deleteAction('/user/deleteById', params)
 const addUser = (params) => postAction('/user/add', params)
 const editUser = (params) => putAction('/user/edit', params)
 const userLogin = (params) => getAction('/user/login', params)
+const getUserPermissions = (params) => getAction('/user/getPermissions', params)
 
 export {
   queryUserList,
@@ -13,5 +14,6 @@ export {
   deleteUserById,
   addUser,
   editUser,
-  userLogin
+  userLogin,
+  getUserPermissions
 }

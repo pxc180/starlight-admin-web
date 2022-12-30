@@ -1,16 +1,24 @@
+import { Message } from '@arco-design/web-vue'
 import { isLogin, needLoginModal } from '@/utils/auth'
 
-import { useAppStore } from '@/store'
+import { useAppStore, useUserStore } from '@/store'
 
 function setupServerPermissionGuard(router) {
   router.beforeEach((to, from, next) => {
     const appStore = useAppStore()
+    const userStore = useUserStore()
     if (
       to.name !== 'login' &&
       appStore.menuFromServer &&
       !appStore.serverMenu.length
     ) {
-      appStore.getServerMenu().then((result) => {
+      appStore.getServerMenu().then(async (result) => {
+        if (!result.length) {
+          Message.warning('您无访问任何菜单的权限，暂无法进入')
+          await userStore.logout()
+          next({ path: '/login', replace: true })
+          return
+        }
         result.forEach((item) => {
           router.addRoute('root', item)
         })

@@ -2,7 +2,10 @@ import mongoose from 'mongoose';
 import boom from '@hapi/boom';
 
 import User from '../models/user.js';
+import Role from '../models/role.js';
+import Menu from '../models/menu.js';
 
+import { arrayToTree } from '../utils/array.js';
 import { paramsToSelector } from '../utils/filter.js';
 import pageQuery from '../utils/pagingQuery.js';
 
@@ -183,6 +186,24 @@ async function userLogin(req, res) {
   }
 }
 
+async function getUserPermissions(req, res) {
+  const actionUser = req.user['0'];
+  const role = await Role.findById(actionUser.roleId, {
+    password: 0
+  });
+  const menu = await Menu.find({ _id: { $in: role.menuIds } }).sort({
+    sortNo: 0
+  });
+  res.send({
+    statusCode: res.statusCode,
+    result: arrayToTree({
+      arr: menu,
+      fieldsNames: { id: '_id', pid: 'parentId', children: 'children' }
+    }),
+    message: '操作成功!'
+  });
+}
+
 export default {
   getList,
   queryByRoleId,
@@ -190,5 +211,6 @@ export default {
   add,
   update,
   deleteUser,
-  userLogin
+  userLogin,
+  getUserPermissions
 };

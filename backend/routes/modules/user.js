@@ -63,6 +63,13 @@ const userRoutes = [
     url: getFullPath('/user/login'),
     schema: { ...userSchema.login },
     handler: userController.userLogin
+  },
+  {
+    method: 'GET',
+    url: getFullPath('/user/getPermissions'),
+    schema: { ...userSchema.getUserPermissions },
+    onRequest: [fastify.authenticate],
+    handler: userController.getUserPermissions
   }
 ];
 

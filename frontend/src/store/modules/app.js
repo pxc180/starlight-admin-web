@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { queryAllMenu } from '@/api/modules/menu'
+import { getUserPermissions } from '@/api/modules/user'
 import { generateAsyncMenu } from '@/utils/permissions.js'
 
 import defaultSettings from '@/config/appSettings.json'
@@ -28,9 +28,9 @@ const useAppStore = defineStore('app', {
     },
     getServerMenu() {
       return new Promise((resolve, reject) => {
-        queryAllMenu()
+        getUserPermissions()
           .then((res) => {
-            const menuData = generateAsyncMenu(res.data.result)
+            const menuData = generateAsyncMenu(res.result)
             this.serverMenu = menuData
 
             resolve(menuData)

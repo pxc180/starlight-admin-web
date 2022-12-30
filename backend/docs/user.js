@@ -83,6 +83,11 @@ const userSchema = {
       },
       required: ['userName', 'password']
     }
+  },
+  getUserPermissions: {
+    description: '查询用户权限信息',
+    tags: ['user'],
+    summary: '查询用户可访问的菜单'
   }
 };
 
