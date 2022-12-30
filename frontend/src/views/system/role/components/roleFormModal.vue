@@ -50,7 +50,7 @@ const validatorRules = {
     trigger: ['change', 'input']
   },
   roleCode: {
-    rules: [{ required: true, message: '请填写角色名称!' }],
+    rules: [{ required: true, message: '请填写角色编码!' }],
     trigger: ['change', 'input']
   }
 }

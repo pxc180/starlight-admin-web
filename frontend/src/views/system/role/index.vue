@@ -55,6 +55,11 @@
       @page-size-change="onPageSizeChange"
     >
       <template #columns>
+        <a-table-column title="序号" :width="60">
+          <template #cell="{ rowIndex }">
+            {{ rowIndex + 1 }}
+          </template>
+        </a-table-column>
         <a-table-column title="角色名称" data-index="roleName"></a-table-column>
         <a-table-column title="角色编码" data-index="roleCode"></a-table-column>
         <a-table-column

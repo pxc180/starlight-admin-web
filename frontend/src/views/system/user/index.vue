@@ -55,6 +55,11 @@
       @page-size-change="onPageSizeChange"
     >
       <template #columns>
+        <a-table-column title="序号" :width="60">
+          <template #cell="{ rowIndex }">
+            {{ rowIndex + 1 }}
+          </template>
+        </a-table-column>
         <a-table-column title="账号" data-index="userName"></a-table-column>
         <a-table-column title="用户姓名" data-index="realName"></a-table-column>
         <a-table-column
