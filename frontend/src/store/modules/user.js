@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 import { setToken, clearToken } from '@/utils/auth'
 import { userLogin } from '@/api/modules/user'
 
+import useAppStore from './app'
+
 const useUserStore = defineStore('user', {
   state: () => ({
     userName: undefined,
@@ -40,6 +42,7 @@ const useUserStore = defineStore('user', {
     async logout() {
       try {
         // await userLogout()
+        useAppStore().updateSettings({ serverMenu: [] })
         clearToken()
         this.resetInfo()
       } catch (err) {
