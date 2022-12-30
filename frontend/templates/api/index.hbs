@@ -1,0 +1,12 @@
+import { getAction, postAction, deleteAction, putAction } from '../http'
+
+// 新增{{chinese}}接口
+const add{{titleCase module}} = (params) => postAction('/{{module}}/add', params)
+// 删除{{chinese}}接口
+const delete{{titleCase module}}ById = (params) => deleteAction('/{{module}}/deleteById', params)
+// 编辑{{chinese}}接口
+const edit{{titleCase module}} = (params) => putAction('/{{module}}/edit', params)
+// 查询{{chinese}}接口（分页查询）
+const query{{titleCase module}}List = (params) => getAction('/{{module}}/queryList', params)
+
+export { add{{titleCase module}}, delete{{titleCase module}}ById, edit{{titleCase module}}, query{{titleCase module}}List }
