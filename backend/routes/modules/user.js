@@ -1,4 +1,4 @@
-import userSchema from '../../docs/user.js';
+import userSchema from '../../schemas/user.js';
 import userController from '../../controllers/userController.js';
 import { getFullPath } from '../config.js';
 import fastify from '../../fastify.js';

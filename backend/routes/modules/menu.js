@@ -1,5 +1,5 @@
 import menuController from '../../controllers/menuController.js';
-import menuSchema from '../../docs/menu.js';
+import menuSchema from '../../schemas/menu.js';
 import { getFullPath } from '../config.js';
 import fastify from '../../fastify.js';
 

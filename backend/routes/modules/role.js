@@ -1,4 +1,4 @@
-import roleSchema from '../../docs/role.js';
+import roleSchema from '../../schemas/role.js';
 import roleController from '../../controllers/roleController.js';
 import { getFullPath } from '../config.js';
 import fastify from '../../fastify.js';
