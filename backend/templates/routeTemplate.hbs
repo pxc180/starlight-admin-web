@@ -1,0 +1,54 @@
+import {{module}}Schema from '../../schemas/{{module}}.js';
+import {{module}}Controller from '../../controllers/{{module}}Controller.js';
+import { getFullPath } from '../config.js';
+import fastify from '../../fastify.js';
+
+const {{module}}Routes = [
+  {
+    method: 'POST',
+    url: getFullPath('/{{module}}/add'),
+    schema: {
+      ...{{module}}Schema.add
+    },
+    onRequest: [fastify.authenticate],
+    handler: {{module}}Controller.add
+  },
+  {
+    method: 'DELETE',
+    url: getFullPath('/{{module}}/deleteById'),
+    schema: {
+      ...{{module}}Schema.delete
+    },
+    onRequest: [fastify.authenticate],
+    handler: {{module}}Controller.delete{{titleCase module}}
+  },
+  {
+    method: 'PUT',
+    url: getFullPath('/{{module}}/edit'),
+    schema: {
+      ...{{module}}Schema.edit
+    },
+    onRequest: [fastify.authenticate],
+    handler: {{module}}Controller.edit
+  },
+  {
+    method: 'GET',
+    url: getFullPath('/{{module}}/queryList'),
+    schema: {
+      ...{{module}}Schema.list
+    },
+    onRequest: [fastify.authenticate],
+    handler: {{module}}Controller.queryList
+  },
+  {
+    method: 'GET',
+    url: getFullPath('/{{module}}/queryDetailById'),
+    schema: {
+      ...{{module}}Schema.detail
+    },
+    onRequest: [fastify.authenticate],
+    handler: {{module}}Controller.queryDetail
+  }
+];
+
+export default {{module}}Routes;

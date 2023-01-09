@@ -1,0 +1,51 @@
+const {{module}}Body = {
+  type: 'object',
+  properties: {
+    id: { type: 'string' }
+  }
+};
+
+const {{module}}Schema = {
+  add: {
+    description: '创建新的{{name}}',
+    tags: ['{{module}}'],
+    summary: '增加新的{{name}}',
+    body: {
+      ...{{module}}Body
+    }
+  },
+  delete: {
+    description: '删除{{name}}',
+    tags: ['{{module}}'],
+    summary: '通过id删除{{name}}',
+    querystring: {
+      ...{{module}}Body,
+      required: ['id']
+    }
+  },
+  edit: {
+    description: '更新{{name}}详情',
+    tags: ['{{module}}'],
+    summary: '通过id更新{{name}}详情',
+    body: {
+      ...{{module}}Body,
+      required: ['id']
+    }
+  },
+  list: {
+    description: '获取{{name}}信息（分页查询）',
+    tags: ['{{module}}'],
+    summary: '获取{{name}}信息（分页查询）'
+  },
+  detail: {
+    description: '获取{{name}}详情',
+    tags: ['{{module}}'],
+    summary: '通过id获取{{name}}详情',
+    querystring: {
+      ...{{module}}Body,
+      required: ['id']
+    }
+  }
+};
+
+export default {{module}}Schema;

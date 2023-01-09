@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon --trace-warnings ./index.js",
+    "new": "plop",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -24,6 +25,7 @@
     "@babel/cli": "^7.19.3",
     "@babel/core": "^7.20.2",
     "@babel/node": "^7.20.2",
-    "@babel/preset-env": "^7.20.2"
+    "@babel/preset-env": "^7.20.2",
+    "plop": "^3.1.1"
   }
 }

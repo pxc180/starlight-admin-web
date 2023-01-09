@@ -1,0 +1,21 @@
+import { Schema, model } from 'mongoose';
+import dayjs from 'dayjs';
+
+const {{module}}Schema = new Schema(
+  {
+    createTime: String, // 创建时间
+    createBy: String, // 创建人
+    updateTime: String, // 更新时间
+    updateBy: String // 更新人
+  },
+  {
+    versionKey: false,
+    timestamps: {
+      createdAt: 'createTime',
+      updatedAt: 'updateTime',
+      currentTime: () => dayjs().format('YYYY-MM-DD HH:mm:ss')
+    }
+  }
+);
+
+export default model('{{titleCase module}}', {{module}}Schema);

@@ -1,0 +1,133 @@
+import mongoose from 'mongoose';
+import boom from '@hapi/boom';
+
+import {{titleCase module}} from '../models/{{module}}.js';
+
+import { paramsToSelector } from '../utils/filter.js';
+import pageQuery from '../utils/pagingQuery.js';
+
+// 添加数据
+async function add(req, res) {
+  try {
+    const {{module}} = new {{titleCase module}}({
+      ...req.body,
+      createBy: req.user ? req.user['0']._id : null
+    });
+
+    await {{module}}.save();
+
+    res.send({
+      statusCode: res.statusCode,
+      data: null,
+      success: true,
+      message: '添加成功!'
+    });
+  } catch (error) {
+    throw boom.boomify(error);
+  }
+}
+
+// 删除数据
+async function delete{{titleCase module}}(req, res) {
+  try {
+    const id = req.query.id;
+    const {{module}} = await {{titleCase module}}.findByIdAndRemove(id);
+    if ({{module}}) {
+      res.send({
+        statusCode: res.statusCode,
+        data: null,
+        success: true,
+        message: '删除成功!'
+      });
+    } else {
+      res.send({
+        statusCode: res.statusCode,
+        data: null,
+        success: false,
+        message: '未查询到数据!'
+      });
+    }
+  } catch (error) {
+    throw boom.boomify(error);
+  }
+}
+
+// 编辑数据
+async function edit(req, res) {
+  try {
+    const {{module}} = { ...req.body, updateBy: req.user ? req.user['0']._id : null };
+    const { ...updateData } = {{module}};
+
+    const update = await {{titleCase module}}.findByIdAndUpdate({{module}}.id, updateData, {
+      new: true
+    });
+
+    res.send({
+      statusCode: res.statusCode,
+      data: update,
+      success: true,
+      message: '操作成功!'
+    });
+  } catch (error) {
+    throw boom.boomify(error);
+  }
+}
+
+// 数据分页查询
+async function queryList(req, res) {
+  try {
+    const { pageNo, pageSize, _t, ...conditions } = req.query;
+
+    const result = await pageQuery({
+      model: {{titleCase module}},
+      pageNo,
+      pageSize,
+      queryParams: paramsToSelector(conditions),
+      returnFields: {
+        password: 0
+      },
+      sortParams: { createTime: -1 },
+    });
+
+    res.send({
+      statusCode: res.statusCode,
+      data: result,
+      message: '操作成功!'
+    });
+  } catch (error) {
+    throw boom.boomify(error);
+  }
+}
+
+// 根据id查询数据详情
+async function queryDetail(req, res) {
+  try {
+    const id = req.query.id;
+    const {{module}} = await {{titleCase module}}.findById(id);
+    if ({{module}}) {
+      res.send({
+        statusCode: res.statusCode,
+        data: {{module}},
+        success: true,
+        message: '操作成功!'
+      });
+    } else {
+      res.send({
+        statusCode: res.statusCode,
+        data: {{module}},
+        success: false,
+        message: '未查询到数据!'
+      });
+    }
+  } catch (error) {
+    throw boom.boomify(error);
+  }
+}
+
+export default {
+  add,
+  delete{{titleCase module}},
+  edit,
+  queryList,
+  queryDetail,
+};
