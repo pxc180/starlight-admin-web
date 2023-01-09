@@ -12,6 +12,7 @@ export default {
         type: 'add',
         path: `src/api/modules/${module}.js`,
         templateFile: 'templates/api/index.hbs',
+        force: true,
         data: {
           module,
           chinese

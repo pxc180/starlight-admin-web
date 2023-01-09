@@ -19,6 +19,7 @@ export default {
         type: 'add',
         path: `src/views/${module}/index.vue`,
         templateFile: 'templates/page/list.hbs',
+        force: true,
         data: {
           module,
           form,
@@ -29,6 +30,7 @@ export default {
         type: 'add',
         path: `src/views/${module}/components/${module}From${form}.vue`,
         templateFile: 'templates/page/form.hbs',
+        force: true,
         data: {
           module,
           form
