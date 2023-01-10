@@ -4,7 +4,9 @@ import mongoose from 'mongoose';
 import fastify from './fastify.js';
 
 mongoose
-  .connect('mongodb://localhost/starlight-admin-dataBase')
+  .connect(
+    'mongodb://root:pengxincheng123456@localhost:27017/starlight-admin-dataBase?authSource=admin'
+  )
   .then(() => {
     console.log('MongoDB 已连接');
   })
