@@ -1,23 +1,21 @@
 <script lang="jsx">
-import { compile, defineComponent, h, ref, watch } from 'vue'
+import { compile, defineComponent, h, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
+import { listenerRouteChange } from '@/utils/routeListener'
 import useMenuTree from './useMenuTree'
 
 export default defineComponent({
   setup() {
     const router = useRouter()
-    const selectedKeys = ref([])
+    const selectedKey = ref([])
 
     const { menuTree } = useMenuTree()
 
-    watch(
-      () => router.currentRoute.value.name,
-      (newValue, oldValue) => {
-        selectedKeys.value = [!newValue ? oldValue : newValue]
-      },
-      { immediate: true }
-    )
+    listenerRouteChange((newRoute) => {
+      const key = newRoute.matched[newRoute.matched.length - 1]?.name
+      selectedKey.value = [key]
+    }, true)
 
     const goto = (item) => {
       router.push(item.path)
@@ -65,7 +63,11 @@ export default defineComponent({
     }
 
     return () => (
-      <a-menu selectedKeys={selectedKeys.value} auto-open-selected={true}>
+      <a-menu
+        selectedKeys={selectedKey.value}
+        auto-open={false}
+        auto-open-selected={true}
+      >
         {renderSubMenu()}
       </a-menu>
     )
