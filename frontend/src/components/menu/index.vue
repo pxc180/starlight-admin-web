@@ -63,7 +63,6 @@ export default defineComponent({
         }
         return nodes
       }
-
       return travel(menuTree.value)
     }
 

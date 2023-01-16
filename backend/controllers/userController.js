@@ -5,7 +5,7 @@ import User from '../models/user.js';
 import Role from '../models/role.js';
 import Menu from '../models/menu.js';
 
-import { arrayToTree } from '../utils/array.js';
+import { arrayToTree } from '../utils/menu.js';
 import { paramsToSelector } from '../utils/filter.js';
 import pageQuery from '../utils/pagingQuery.js';
 

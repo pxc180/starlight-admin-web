@@ -21,19 +21,17 @@ export default function useMenuTree() {
       if (!routes) return null
 
       const collector = routes.map((element) => {
-        if (!element.children) {
-          return element
-        }
+        if (element.children && element.children.length) {
+          element.children = element.children.filter(
+            (item) => item.meta?.hidden !== true
+          )
 
-        element.children = element.children.filter(
-          (item) => item.meta?.hidden !== true
-        )
+          const subItem = travel(element.children)
 
-        const subItem = travel(element.children)
-
-        if (subItem.length) {
-          element.children = subItem
-          return element
+          if (subItem.length) {
+            element.children = subItem
+            return element
+          }
         }
 
         if (element.meta?.hidden !== true) {
