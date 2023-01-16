@@ -4,7 +4,12 @@
       <LayoutHeader></LayoutHeader>
     </div>
     <a-layout>
-      <a-layout-sider class="global-layout-sider" hide-trigger collapsible>
+      <a-layout-sider
+        class="global-layout-sider"
+        :style="{ width: menuCollapse ? '48px' : '220px' }"
+        hide-trigger
+        collapsible
+      >
         <Menu />
       </a-layout-sider>
       <a-layout
@@ -12,8 +17,13 @@
           'global-layout-content': true,
           'global-tab-layout-content': appStore.tabBar
         }"
+        :style="{ paddingLeft: menuCollapse ? '48px' : '220px' }"
       >
-        <TabsBar class="global-tabs-bar" v-if="appStore.tabBar"></TabsBar>
+        <TabsBar
+          v-if="appStore.tabBar"
+          class="global-tabs-bar"
+          :style="widthStyle()"
+        ></TabsBar>
         <a-layout-content>
           <PageLayout></PageLayout>
         </a-layout-content>
@@ -31,15 +41,19 @@ import TabsBar from '../page/TabsBar.vue'
 import LayoutHeader from './LayoutHeader.vue'
 import Menu from '../menu/index.vue'
 import { useAppStore } from '@/store'
+import { computed } from 'vue'
 
 const appStore = useAppStore()
+const menuCollapse = computed(() => appStore.menuCollapse)
+const widthStyle = () => {
+  return { width: `calc(100% - ${menuCollapse.value ? '48' : '220'}px)` }
+}
 </script>
 
 <style scoped lang="less">
 @header-size-height: 60px;
 @tabBar-size-height: 40px;
 @footer-size-height: 40px;
-@menu-size-width: 220px;
 
 .global-layout {
   height: 100%;
@@ -56,7 +70,6 @@ const appStore = useAppStore()
     border-bottom: 1px solid var(--color-border);
   }
   .global-layout-sider {
-    width: @menu-size-width !important;
     position: fixed;
     height: calc(100% - @header-size-height);
     padding-top: @header-size-height;
@@ -68,7 +81,6 @@ const appStore = useAppStore()
     min-height: calc(100vh - @header-size-height);
     overflow: hidden;
     padding-top: @header-size-height;
-    padding-left: @menu-size-width;
     background-color: var(--color-fill-2);
 
     &.global-tab-layout-content {
@@ -77,10 +89,8 @@ const appStore = useAppStore()
     }
 
     .global-tabs-bar {
-      width: calc(100% - @menu-size-width);
       position: fixed;
       top: @header-size-height;
-      left: @menu-size-width;
       z-index: 99;
     }
     .arco-layout-content {

@@ -4,10 +4,12 @@ import { useRouter } from 'vue-router'
 
 import { listenerRouteChange } from '@/utils/routeListener'
 import useMenuTree from './useMenuTree'
+import { useAppStore } from '@/store'
 
 export default defineComponent({
   setup() {
     const router = useRouter()
+    const appStore = useAppStore()
     const selectedKey = ref([])
 
     const { menuTree } = useMenuTree()
@@ -19,6 +21,9 @@ export default defineComponent({
 
     const goto = (item) => {
       router.push(item.path)
+    }
+    const menuCollapseChange = (value) => {
+      appStore.updateSettings({ menuCollapse: value })
     }
 
     const renderSubMenu = () => {
@@ -64,9 +69,13 @@ export default defineComponent({
 
     return () => (
       <a-menu
+        showCollapseButton
+        v-model:collapsed={appStore.menuCollapse}
         selectedKeys={selectedKey.value}
         auto-open={false}
         auto-open-selected={true}
+        style="height: 100%"
+        onCollapse={menuCollapseChange}
       >
         {renderSubMenu()}
       </a-menu>
