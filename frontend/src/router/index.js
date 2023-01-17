@@ -8,14 +8,22 @@ import defaultSettings from '@/config/appSettings.json'
 const notFoundRouter = {
   path: '/:pathMatch(.*)*',
   name: 'notFound',
-  component: () => import('@/views/notFound/index.vue')
+  component: () => import('@/views/notFound/index.vue'),
+  meta: {
+    title: '404',
+    noAffix: true
+  }
 }
 
 const constantRouter = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/views/login/index.vue')
+    component: () => import('@/views/login/index.vue'),
+    meta: {
+      title: '404',
+      noAffix: true
+    }
   }
 ]
 

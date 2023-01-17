@@ -1,8 +1,10 @@
 import { defineStore } from 'pinia'
 import { setToken, clearToken } from '@/utils/auth'
 import { userLogin } from '@/api/modules/user'
+import { removeRouteListener } from '@/utils/routeListener'
 
 import useAppStore from './app'
+import useTabBarStore from './tabBar'
 
 const useUserStore = defineStore('user', {
   state: () => ({
@@ -42,9 +44,11 @@ const useUserStore = defineStore('user', {
     async logout() {
       try {
         // await userLogout()
-        useAppStore().updateSettings({ serverMenu: [] })
-        clearToken()
         this.resetInfo()
+        useAppStore().updateSettings({ serverMenu: [] })
+        useTabBarStore().resetRouteList()
+        clearToken()
+        removeRouteListener()
       } catch (err) {
         clearToken()
         throw err

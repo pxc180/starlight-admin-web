@@ -27,6 +27,18 @@ const useTabBarStore = defineStore('tabBar', {
   },
 
   actions: {
+    resetRouteList() {
+      this.routeList = [
+        {
+          title: '工作台',
+          name: 'Workplace',
+          fullPath: '/dashboard/workplace'
+        }
+      ]
+    },
+    updateSettings(partial) {
+      this.$patch(partial)
+    },
     updateRouteList(route) {
       this.routeList.push(formatRoute(route))
     },

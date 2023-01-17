@@ -22,10 +22,15 @@ import { computed } from 'vue'
 
 const router = useRouter()
 const tabBarStore = useTabBarStore()
-const routeList = computed(() => tabBarStore.getRouteList)
+const routeList = computed(() => {
+  return tabBarStore.getRouteList
+})
 
 listenerRouteChange((route) => {
-  if (!routeList.value.some((tag) => tag.fullPath === route.fullPath)) {
+  if (
+    !route.meta.noAffix &&
+    !routeList.value.some((tag) => tag.fullPath === route.fullPath)
+  ) {
     tabBarStore.updateRouteList(route)
   }
 }, true)
