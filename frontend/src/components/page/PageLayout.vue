@@ -6,9 +6,12 @@
       </div>
     </transition>
   </router-view>
+  <GlobalSetting></GlobalSetting>
 </template>
 
-<script setup></script>
+<script setup>
+import GlobalSetting from '@/components/setting/GlobalSetting.vue'
+</script>
 
 <style scoped lang="less">
 .page-container {

@@ -55,7 +55,7 @@ export function generateAsyncMenu(menu, layer = 0) {
 }
 
 /**
- * 格式化服务端返回的路由信息
+ * 格式化本地的路由信息
  *
  * @param {Array} menu 菜单数据
  * @returns 处理后的菜单数据

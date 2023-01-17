@@ -24,6 +24,20 @@
         </a-tooltip>
       </li>
       <li>
+        <a-tooltip content="页面配置">
+          <a-button
+            class="nav-btn"
+            type="outline"
+            shape="circle"
+            @click="setSettingVisible"
+          >
+            <template #icon>
+              <icon-settings />
+            </template>
+          </a-button>
+        </a-tooltip>
+      </li>
+      <li>
         <a-dropdown position="br">
           <a-avatar :size="32" :style="{ backgroundColor: '#3370ff' }">
             <IconUser />
@@ -43,7 +57,11 @@
 </template>
 
 <script setup>
-import { IconUser, IconExport } from '@arco-design/web-vue/es/icon'
+import {
+  IconUser,
+  IconExport,
+  IconSettings
+} from '@arco-design/web-vue/es/icon'
 import { computed } from 'vue'
 import { useDark, useToggle } from '@vueuse/core'
 import { useRouter } from 'vue-router'
@@ -69,7 +87,6 @@ const isDark = useDark({
     appStore.toggleTheme(dark)
   }
 })
-
 const toggleTheme = useToggle(isDark)
 
 const handleLogout = async () => {
@@ -78,6 +95,9 @@ const handleLogout = async () => {
     router.push('/login')
     Message.success('登出成功')
   } catch (error) {}
+}
+const setSettingVisible = () => {
+  appStore.updateSettings({ globalSetting: true })
 }
 </script>
 
