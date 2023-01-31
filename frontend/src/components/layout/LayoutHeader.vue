@@ -24,6 +24,21 @@
         </a-tooltip>
       </li>
       <li>
+        <a-tooltip :content="`点击${isFullscreen ? '退出' : '切换'}全屏模式`">
+          <a-button
+            class="nav-btn"
+            type="outline"
+            shape="circle"
+            @click="toggleFullScreen"
+          >
+            <template #icon>
+              <icon-fullscreen-exit v-if="isFullscreen" />
+              <icon-fullscreen v-else />
+            </template>
+          </a-button>
+        </a-tooltip>
+      </li>
+      <li>
         <a-tooltip content="页面配置">
           <a-button
             class="nav-btn"
@@ -63,7 +78,7 @@ import {
   IconSettings
 } from '@arco-design/web-vue/es/icon'
 import { computed } from 'vue'
-import { useDark, useToggle } from '@vueuse/core'
+import { useDark, useToggle, useFullscreen } from '@vueuse/core'
 import { useRouter } from 'vue-router'
 import { useAppStore, useUserStore } from '@/store'
 
@@ -88,6 +103,8 @@ const isDark = useDark({
   }
 })
 const toggleTheme = useToggle(isDark)
+
+const { isFullscreen, toggle: toggleFullScreen } = useFullscreen()
 
 const handleLogout = async () => {
   try {
