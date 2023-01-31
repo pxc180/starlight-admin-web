@@ -2,7 +2,7 @@
   <div class="header">
     <div class="left-header">
       <div class="logo"></div>
-      <h2>Web Admin</h2>
+      <h2>{{ appStore.appName }}</h2>
       <!-- <h2>Starlight Admin Web</h2> -->
     </div>
     <ul class="right-header">
