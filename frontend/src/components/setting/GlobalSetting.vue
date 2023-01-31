@@ -26,8 +26,9 @@
 </template>
 
 <script setup>
+import { Notification } from '@arco-design/web-vue'
 import { useAppStore } from '@/store'
-import { computed } from 'vue'
+import { computed, toRaw } from 'vue'
 import SettingItem from './SettingItem.vue'
 
 const appStore = useAppStore()
@@ -41,7 +42,6 @@ const settingOptions = computed(() => [
   {
     name: '动态路由',
     key: 'menuFromServer',
-    prompt: '此配置不会立即生效，请修改配置文件后查看效果！',
     defaultVal: appStore.menuFromServer
   }
 ])
@@ -55,8 +55,17 @@ const handleChange = async ({ value, key }) => {
 const handleCancel = () => {
   appStore.updateSettings({ globalSetting: false })
 }
-const copySettings = () => {
-  appStore.updateSettings({ globalSetting: false })
+const copySettings = async () => {
+  const newSetting = toRaw(appStore.$state)
+  newSetting.serverMenu = []
+  newSetting.globalSetting = false
+  try {
+    await navigator.clipboard.writeText(JSON.stringify(newSetting))
+    appStore.updateSettings({ globalSetting: false })
+    Notification.success({ content: '复制成功' })
+  } catch (error) {
+    Notification.error({ content: `复制失败，失败原因：${error}！` })
+  }
 }
 </script>
 
