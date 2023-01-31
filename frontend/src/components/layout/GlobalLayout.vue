@@ -5,8 +5,9 @@
     </div>
     <a-layout>
       <a-layout-sider
+        v-if="renderMenu"
         class="global-layout-sider"
-        :style="{ width: menuCollapse ? '48px' : '220px' }"
+        :width="menuWidth"
         hide-trigger
         collapsible
       >
@@ -17,7 +18,7 @@
           'global-layout-content': true,
           'global-tab-layout-content': appStore.tabBar
         }"
-        :style="{ paddingLeft: menuCollapse ? '48px' : '220px' }"
+        :style="paddingStyle"
       >
         <TabsBar
           v-if="appStore.tabBar"
@@ -44,10 +45,21 @@ import { useAppStore } from '@/store'
 import { computed } from 'vue'
 
 const appStore = useAppStore()
+
 const menuCollapse = computed(() => appStore.menuCollapse)
+const renderMenu = computed(() => appStore.menu)
+const menuWidth = computed(() => (appStore.menuCollapse ? 48 : 220))
+
 const widthStyle = () => {
-  return { width: `calc(100% - ${menuCollapse.value ? '48' : '220'}px)` }
+  return { width: `calc(100% - ${renderMenu.value ? menuWidth.value : 0}px)` }
 }
+const paddingStyle = computed(() => {
+  const paddingLeft = renderMenu.value
+    ? { paddingLeft: `${menuWidth.value}px` }
+    : {}
+
+  return { ...paddingLeft }
+})
 </script>
 
 <style scoped lang="less">
