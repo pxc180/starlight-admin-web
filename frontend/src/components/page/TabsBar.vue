@@ -27,7 +27,9 @@ const routeList = computed(() => {
 })
 
 listenerRouteChange((route) => {
+  console.log(route)
   if (
+    route.name !== 'notFound' &&
     !route.meta.noAffix &&
     !routeList.value.some((tag) => tag.fullPath === route.fullPath)
   ) {
