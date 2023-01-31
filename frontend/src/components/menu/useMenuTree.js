@@ -1,18 +1,15 @@
 import { useAppStore } from '@/store'
-import { useRouter } from 'vue-router'
 import { computed } from 'vue'
+import { appRoutes } from '@/router/routes'
 
 export default function useMenuTree() {
   const appStore = useAppStore()
-  const router = useRouter()
 
   const appRoute = computed(() => {
     if (appStore.menuFromServer) {
       return appStore.serverMenu
     }
-    return router
-      .getRoutes()
-      .filter((item) => item?.meta?.requireAuth && item.meta.root)
+    return appRoutes
   })
 
   const menuTree = computed(() => {

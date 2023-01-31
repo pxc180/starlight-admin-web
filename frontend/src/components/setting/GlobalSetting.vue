@@ -10,12 +10,18 @@
   >
     <template #title> 页面配置 </template>
     <h5 class="title">内容区域</h5>
-    <SettingItem
-      v-for="item in settingOptions"
-      :key="item.key"
-      :option="item"
-      @change="handleChange"
-    />
+    <div class="block">
+      <SettingItem
+        v-for="item in settingOptions"
+        :key="item.key"
+        :option="item"
+        @change="handleChange"
+      />
+    </div>
+    <a-alert>
+      配置之后仅是临时生效，要想真正作用于项目，点击下方的 "复制配置"
+      按钮，将配置替换到 appSettings.json 中即可。
+    </a-alert>
   </a-drawer>
 </template>
 
@@ -35,6 +41,7 @@ const settingOptions = computed(() => [
   {
     name: '动态路由',
     key: 'menuFromServer',
+    prompt: '此配置不会立即生效，请修改配置文件后查看效果！',
     defaultVal: appStore.menuFromServer
   }
 ])
@@ -57,5 +64,8 @@ const copySettings = () => {
 .title {
   margin: 10px 0;
   font-size: 14px;
+}
+.block {
+  margin-bottom: 24px;
 }
 </style>

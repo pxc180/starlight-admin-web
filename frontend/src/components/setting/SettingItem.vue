@@ -1,6 +1,11 @@
 <template>
   <div class="setting-item-wrapper">
-    <span>{{ option.name }}</span>
+    <span>
+      {{ option.name }}
+      <a-tooltip v-if="option.prompt" :content="option.prompt">
+        <icon-question-circle-fill />
+      </a-tooltip>
+    </span>
     <a-switch :default-checked="option.defaultVal" @change="settingChange" />
   </div>
 </template>
