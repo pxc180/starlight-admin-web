@@ -72,7 +72,6 @@ async function add(req, res) {
       message: '添加成功!'
     });
   } catch (error) {
-    console.log(error);
     throw boom.boomify(error);
   }
 }

@@ -26,9 +26,11 @@ request.interceptors.response.use(
   (err) => {
     const { statusCode, code } = err.response.data
     if (
-      statusCode === 401 ||
-      code.includes('JWT_INVALID') ||
-      code.includes('JWT_MALFORMED')
+      statusCode &&
+      code &&
+      (statusCode === 401 ||
+        code.includes('JWT_INVALID') ||
+        code.includes('JWT_MALFORMED'))
     ) {
       needLoginModal(function () {
         clearToken()
@@ -36,7 +38,7 @@ request.interceptors.response.use(
       })
     }
 
-    return Promise.reject(err.response.data)
+    return Promise.reject(err.response.data.message)
   }
 )
 

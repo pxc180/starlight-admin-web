@@ -1,10 +1,11 @@
 import { Schema, model } from 'mongoose';
+import uniqueValidator from 'mongoose-unique-validator';
 import dayjs from 'dayjs';
 
 const roleSchema = new Schema(
   {
-    roleName: String,
-    roleCode: { type: String, unique: true },
+    roleName: { type: String, required: true },
+    roleCode: { type: String, required: true, unique: true },
     description: String,
     createTime: String,
     createBy: String,
@@ -21,5 +22,9 @@ const roleSchema = new Schema(
     }
   }
 );
+
+roleSchema.plugin(uniqueValidator, {
+  message: 'Error, expected {PATH} to be unique.'
+});
 
 export default model('Role', roleSchema);

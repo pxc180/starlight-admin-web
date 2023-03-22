@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import uniqueValidator from 'mongoose-unique-validator';
 import dayjs from 'dayjs';
 
 const menuSchema = new Schema(
@@ -27,5 +28,9 @@ const menuSchema = new Schema(
     }
   }
 );
+
+menuSchema.plugin(uniqueValidator, {
+  message: 'Error, expected {PATH} to be unique.'
+});
 
 export default model('Menu', menuSchema);

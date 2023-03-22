@@ -19,6 +19,7 @@
     "dayjs": "^1.11.6",
     "fastify": "^4.8.1",
     "mongoose": "^6.6.5",
+    "mongoose-unique-validator": "^3.1.0",
     "nodemon": "^2.0.20"
   },
   "devDependencies": {

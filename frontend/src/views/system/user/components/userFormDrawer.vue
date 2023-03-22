@@ -171,10 +171,7 @@ const handleOk = async () => {
       })
       .catch((error) => {
         flag = false
-        const { code, message } = error
-        Message.warning(
-          `操作失败，${code === '11000' ? '该账号已存在' : message || error}`
-        )
+        Message.warning(`操作失败，${error}`)
       })
       .finally(() => {
         loading.value = false
