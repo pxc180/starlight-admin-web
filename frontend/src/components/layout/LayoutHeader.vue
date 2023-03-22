@@ -3,8 +3,12 @@
     <div class="left-header">
       <div class="logo"></div>
       <h2>{{ appStore.appName }}</h2>
-      <!-- <h2>Starlight Admin Web</h2> -->
     </div>
+
+    <div class="header-menu" v-if="renderMenu">
+      <Menu mode="horizontal" />
+    </div>
+
     <ul class="right-header">
       <li>
         <a-tooltip
@@ -72,6 +76,7 @@
 </template>
 
 <script setup>
+import Menu from '../menu/index.vue'
 import {
   IconUser,
   IconExport,
@@ -85,12 +90,16 @@ import { useAppStore, useUserStore } from '@/store'
 import { Message } from '@arco-design/web-vue'
 
 const appStore = useAppStore()
-const userStore = useUserStore()
 const router = useRouter()
 
+const renderMenu = computed(() => appStore.menu && appStore.topMenu)
 const theme = computed(() => {
   return appStore.theme
 })
+
+const setSettingVisible = () => {
+  appStore.updateSettings({ globalSetting: true })
+}
 
 const isDark = useDark({
   selector: 'body',
@@ -106,15 +115,13 @@ const toggleTheme = useToggle(isDark)
 
 const { isFullscreen, toggle: toggleFullScreen } = useFullscreen()
 
+const userStore = useUserStore()
 const handleLogout = async () => {
   try {
     await userStore.logout()
     router.push('/login')
     Message.success('登出成功')
   } catch (error) {}
-}
-const setSettingVisible = () => {
-  appStore.updateSettings({ globalSetting: true })
 }
 </script>
 
@@ -137,6 +144,10 @@ const setSettingVisible = () => {
     h2 {
       color: var(--color-text-1);
     }
+  }
+
+  .header-menu {
+    flex: 1;
   }
   .right-header {
     display: flex;

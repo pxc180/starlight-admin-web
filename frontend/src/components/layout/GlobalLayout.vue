@@ -46,7 +46,7 @@ import { computed } from 'vue'
 
 const appStore = useAppStore()
 
-const renderMenu = computed(() => appStore.menu)
+const renderMenu = computed(() => appStore.menu && !appStore.topMenu)
 const menuWidth = computed(() => (appStore.menuCollapse ? 48 : 220))
 
 const widthStyle = () => {

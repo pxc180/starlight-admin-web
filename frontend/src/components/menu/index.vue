@@ -7,7 +7,8 @@ import useMenuTree from './useMenuTree'
 import { useAppStore } from '@/store'
 
 export default defineComponent({
-  setup() {
+  props: { mode: { type: String, default: 'vertical' } },
+  setup(props) {
     const router = useRouter()
     const appStore = useAppStore()
     const selectedKey = ref([])
@@ -66,19 +67,22 @@ export default defineComponent({
       return travel(menuTree.value)
     }
 
-    return () => (
-      <a-menu
-        showCollapseButton
-        v-model:collapsed={appStore.menuCollapse}
-        selectedKeys={selectedKey.value}
-        auto-open={false}
-        auto-open-selected={true}
-        style="height: 100%"
-        onCollapse={menuCollapseChange}
-      >
-        {renderSubMenu()}
-      </a-menu>
-    )
+    return () => {
+      return (
+        <a-menu
+          showCollapseButton
+          mode={props.mode}
+          v-model:collapsed={appStore.menuCollapse}
+          selectedKeys={selectedKey.value}
+          auto-open={false}
+          auto-open-selected={true}
+          style="height: 100%"
+          onCollapse={menuCollapseChange}
+        >
+          {renderSubMenu()}
+        </a-menu>
+      )
+    }
   }
 })
 </script>
