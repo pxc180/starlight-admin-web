@@ -1,7 +1,6 @@
 <script lang="jsx">
-import { compile, defineComponent, h, ref } from 'vue'
+import { compile, defineComponent, h, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-
 import { listenerRouteChange } from '@/utils/routeListener'
 import useMenuTree from './useMenuTree'
 import { useAppStore } from '@/store'
@@ -12,6 +11,9 @@ export default defineComponent({
     const router = useRouter()
     const appStore = useAppStore()
     const selectedKey = ref([])
+    const collapsedMenu = computed(
+      () => appStore.menuCollapse && !appStore.topMenu
+    )
 
     const { menuTree } = useMenuTree()
 
@@ -72,7 +74,7 @@ export default defineComponent({
         <a-menu
           showCollapseButton
           mode={props.mode}
-          v-model:collapsed={appStore.menuCollapse}
+          v-model:collapsed={collapsedMenu.value}
           selectedKeys={selectedKey.value}
           auto-open={false}
           auto-open-selected={true}
