@@ -1,39 +1,31 @@
-# interaction-store
+# Starlight-admin-web
 
-#### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+### 介绍
+本系统包含前后端代码，前端使用技术栈：`Vue3` + `Vite` + `Arco Design Vue` + `Pinia`；后端使用技术栈：`Nodejs` + `Mongoose` + `Fastify` + `Swagger`；数据库则是 `mongoose`。主要实现了基础管理系统的用户管理、菜单管理和角色管理；前端动态路由，实现不同用户对菜单的访问权限；多页面/单页签切换。
 
-#### 软件架构
-软件架构说明
+### 安装教程
 
+#### 前端环境
+1.  cd frontend\
+2.  npm install
+3.  npm run dev
 
-#### 安装教程
+#### 后端环境
+1.  cd backend\
+2.  npm install
+3.  npm run dev
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+运行 `npm run dev` 之前务必将 MongoDB 的连接地址改为本地 MongoDB 地址
 
-#### 使用说明
+### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  后端启动后 Swagger 地址为 http://localhost:9001/api/v1/helper/static/index.html
+2.  前后端均已安装 plop，可以通过命令行快速生成模块间的固定代码，运行 `npm run new` 即可
 
-#### 参与贡献
+### 参与贡献
 
 1.  Fork 本仓库
 2.  新建 Feat_xxx 分支
 3.  提交代码
 4.  新建 Pull Request
 
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
