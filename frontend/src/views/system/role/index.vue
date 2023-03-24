@@ -1,49 +1,36 @@
 <template>
   <a-card class="general-card" title="角色管理">
-    <a-row>
-      <a-col flex="auto">
-        <a-form :model="form" ref="formRef">
-          <a-row :gutter="16">
-            <a-col :span="8">
-              <a-form-item field="roleName" label="角色名称">
-                <a-input v-model="form.roleName" />
-              </a-form-item>
-            </a-col>
-            <a-col :span="8">
-              <a-form-item field="createTime" label="创建时间">
-                <a-date-picker v-model="form.createTime" style="width: 100%" />
-              </a-form-item>
-            </a-col>
-          </a-row>
-        </a-form>
-      </a-col>
-      <a-divider style="height: 32px" direction="vertical" />
-      <a-col flex="172px">
-        <a-space :size="8">
-          <a-button type="primary" @click="onSearchQuery">
-            <template #icon>
-              <icon-search />
-            </template>
-            查询
-          </a-button>
-          <a-button @click="onResetQuery">
-            <template #icon>
-              <icon-refresh />
-            </template>
-            重置
-          </a-button>
-        </a-space>
-      </a-col>
-    </a-row>
-    <a-divider style="margin-top: 0" />
-    <a-row style="margin-bottom: 16px">
-      <a-button type="primary" @click="onAdd">
-        <template #icon>
-          <icon-plus />
-        </template>
-        新建
-      </a-button>
-    </a-row>
+    <TableSearch
+      :form="form"
+      :onSearchQuery="onSearchQuery"
+      :onResetQuery="onResetQuery"
+    >
+      <template v-slot:item1>
+        <a-form-item field="roleName" label="角色名称">
+          <a-input v-model="form.roleName" />
+        </a-form-item>
+      </template>
+      <template v-slot:item2>
+        <a-form-item field="createTime" label="创建时间">
+          <a-date-picker v-model="form.createTime" style="width: 100%" />
+        </a-form-item>
+      </template>
+      <template v-slot:item3>
+        <a-form-item field="createTime" label="创建时间">
+          <a-date-picker v-model="form.createTime" style="width: 100%" />
+        </a-form-item>
+      </template>
+      <template v-slot:item4>
+        <a-form-item field="createTime" label="创建时间">
+          <a-date-picker v-model="form.createTime" style="width: 100%" />
+        </a-form-item>
+      </template>
+      <template v-slot:item5>
+        <a-form-item field="createTime" label="创建时间">
+          <a-date-picker v-model="form.createTime" style="width: 100%" />
+        </a-form-item>
+      </template>
+    </TableSearch>
 
     <a-table
       row-key="_id"
@@ -114,6 +101,7 @@ import { queryRoleList, deleteRoleById } from '@/api/modules/role'
 import RoleFormModal from './components/roleFormModal.vue'
 import RoleUserModal from './components/roleUserModal.vue'
 import SetRolePermissionsVue from './components/setRolePermissions.vue'
+import TableSearch from '@/components/tableSearch/index.vue'
 
 const {
   form,
