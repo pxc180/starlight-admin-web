@@ -2,7 +2,7 @@
   <a-card class="general-card" title="菜单管理">
     <a-row>
       <a-col flex="auto">
-        <a-form :model="form" ref="formRef" label-align="left">
+        <a-form :model="form" label-align="left">
           <a-row :gutter="16">
             <a-col :span="8">
               <a-form-item field="name" label="菜单名称">
@@ -93,7 +93,6 @@ import MenuFormDrawer from './components/menuFormDrawer.vue'
 
 const {
   form,
-  formRef,
   modalFormRef,
   loading,
   tableData,

@@ -10,8 +10,7 @@ export default function usePageList({
   disabledPage
 }) {
   const { list, deleteById } = api
-  const form = reactive(searchForm)
-  const formRef = ref(null)
+  const form = reactive({ ...searchForm })
   const modalFormRef = ref(null)
   const tableData = ref([])
   const loading = ref(false)
@@ -105,13 +104,12 @@ export default function usePageList({
     queryList(1)
   }
   const onResetQuery = () => {
-    formRef.value.resetFields()
+    Object.assign(form, { ...searchForm })
     queryList(1)
   }
 
   return {
     form,
-    formRef,
     modalFormRef,
     loading,
     tableData,

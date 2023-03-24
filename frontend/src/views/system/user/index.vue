@@ -2,7 +2,7 @@
   <a-card class="general-card" title="用户管理">
     <a-row>
       <a-col flex="auto">
-        <a-form :model="form" ref="formRef">
+        <a-form :model="form">
           <a-row :gutter="16">
             <a-col :span="8">
               <a-form-item field="realName" label="用户姓名">
@@ -102,7 +102,6 @@ import UserFormDrawer from './components/userFormDrawer.vue'
 
 const {
   form,
-  formRef,
   modalFormRef,
   loading,
   tableData,
