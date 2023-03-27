@@ -1,35 +1,17 @@
 <template>
   <a-card class="general-card" title="菜单管理">
-    <a-row>
-      <a-col flex="auto">
-        <a-form :model="form" label-align="left">
-          <a-row :gutter="16">
-            <a-col :span="8">
-              <a-form-item field="name" label="菜单名称">
-                <a-input v-model="form.name" />
-              </a-form-item>
-            </a-col>
-          </a-row>
-        </a-form>
-      </a-col>
-      <a-divider style="height: 32px" direction="vertical" />
-      <a-col flex="172px">
-        <a-space :size="8">
-          <a-button type="primary" @click="onSearchQuery">
-            <template #icon>
-              <icon-search />
-            </template>
-            查询
-          </a-button>
-          <a-button @click="onResetQuery">
-            <template #icon>
-              <icon-refresh />
-            </template>
-            重置
-          </a-button>
-        </a-space>
-      </a-col>
-    </a-row>
+    <TableSearch
+      :form="form"
+      :onSearchQuery="onSearchQuery"
+      :onResetQuery="onResetQuery"
+    >
+      <template v-slot:item1>
+        <a-form-item field="name" label="菜单名称">
+          <a-input v-model="form.name" />
+        </a-form-item>
+      </template>
+    </TableSearch>
+
     <a-divider style="margin-top: 0" />
     <a-row style="margin-bottom: 16px">
       <a-button type="primary" @click="onAdd">
@@ -90,6 +72,7 @@
 import usePageList from '@/hooks/usePageList'
 import { queryAllMenu, deleteMenuById } from '@/api/modules/menu'
 import MenuFormDrawer from './components/menuFormDrawer.vue'
+import TableSearch from '@/components/tableSearch/index.vue'
 
 const {
   form,

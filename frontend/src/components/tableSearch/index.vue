@@ -96,12 +96,6 @@ onMounted(() => {
     if (!matchMediaQuery) return
     const listener = ({ matches }) => {
       screens[screen] = matches
-      console.log(
-        '🚀 ~ file: index.vue:56 ~ listener ~ matches:',
-        matchMediaQuery,
-        matches
-      )
-      console.log(screens)
     }
     const mql = window.matchMedia(matchMediaQuery)
     if (mql.addEventListener) {

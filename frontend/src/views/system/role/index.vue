@@ -15,22 +15,17 @@
           <a-date-picker v-model="form.createTime" style="width: 100%" />
         </a-form-item>
       </template>
-      <template v-slot:item3>
-        <a-form-item field="createTime" label="创建时间">
-          <a-date-picker v-model="form.createTime" style="width: 100%" />
-        </a-form-item>
-      </template>
-      <template v-slot:item4>
-        <a-form-item field="createTime" label="创建时间">
-          <a-date-picker v-model="form.createTime" style="width: 100%" />
-        </a-form-item>
-      </template>
-      <template v-slot:item5>
-        <a-form-item field="createTime" label="创建时间">
-          <a-date-picker v-model="form.createTime" style="width: 100%" />
-        </a-form-item>
-      </template>
     </TableSearch>
+
+    <a-divider style="margin-top: 0" />
+    <a-row style="margin-bottom: 16px">
+      <a-button type="primary" @click="onAdd">
+        <template #icon>
+          <icon-plus />
+        </template>
+        新建
+      </a-button>
+    </a-row>
 
     <a-table
       row-key="_id"
@@ -105,7 +100,6 @@ import TableSearch from '@/components/tableSearch/index.vue'
 
 const {
   form,
-  formRef,
   modalFormRef,
   loading,
   tableData,
