@@ -90,7 +90,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import usePageList from '@/hooks/usePageList'
 import { queryRoleList, deleteRoleById } from '@/api/modules/role'
 import RoleFormModal from './components/roleFormModal.vue'
@@ -126,6 +126,14 @@ const onCheckRoleUser = (record) => {
 const onAwardedPermissions = (record) => {
   setPermissionsRef.value.onShow(record._id)
 }
+
+onMounted(() => {
+  console.log(1111111)
+})
+</script>
+
+<script>
+export default { name: 'system-role' }
 </script>
 
 <style scoped lang="less"></style>

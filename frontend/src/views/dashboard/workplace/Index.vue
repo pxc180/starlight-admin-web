@@ -15,4 +15,8 @@ const toMonitor = () => {
 }
 </script>
 
+<script>
+export default { name: 'dashboard-workplace' }
+</script>
+
 <style scoped lang="less"></style>

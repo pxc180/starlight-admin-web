@@ -42,7 +42,7 @@ const changePage = (key) => {
 const deletePage = (key) => {
   const index = routeList.value.findIndex((v) => v.fullPath === key)
   if (index > 0) {
-    tabBarStore.deleteRoute(index)
+    tabBarStore.deleteRoute(index, routeList.value[index])
     let latest
     if (index === routeList.value.length) {
       latest = routeList.value[routeList.value.length - 1]

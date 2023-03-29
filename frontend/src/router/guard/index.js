@@ -4,6 +4,9 @@ import setupServerPermissionGuard from './serverPermissions'
 
 function setupPageGuard(router) {
   router.beforeEach(async (to) => {
+    if (to.matched && to.matched.length > 2) {
+      to.matched.splice(1, to.matched.length - 2)
+    }
     setRouteEmitter(to)
   })
 }

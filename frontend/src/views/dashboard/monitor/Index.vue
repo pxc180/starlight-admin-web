@@ -15,4 +15,8 @@ const toWorkplace = () => {
 }
 </script>
 
+<script>
+export default { name: 'dashboard-monitor' }
+</script>
+
 <style scoped lang="less"></style>

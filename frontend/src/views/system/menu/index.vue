@@ -95,4 +95,8 @@ const {
 })
 </script>
 
+<script>
+export default { name: 'system-menu' }
+</script>
+
 <style scoped lang="less"></style>

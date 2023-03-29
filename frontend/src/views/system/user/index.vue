@@ -103,4 +103,8 @@ const {
 })
 </script>
 
+<script>
+export default { name: 'system-user' }
+</script>
+
 <style scoped lang="less"></style>

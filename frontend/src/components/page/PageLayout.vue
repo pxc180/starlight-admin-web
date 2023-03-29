@@ -2,7 +2,15 @@
   <router-view v-slot="{ Component, route }">
     <transition name="fade" mode="out-in" appear>
       <div class="page-container">
-        <component :is="Component" :key="route.fullPath"></component>
+        <keep-alive v-if="route.meta.keepAlive" :include="cacheList">
+          <component :is="Component" :key="route.name" />
+        </keep-alive>
+
+        <component
+          :is="Component"
+          v-else
+          :key="route.name"
+        />
       </div>
     </transition>
   </router-view>
@@ -11,6 +19,11 @@
 
 <script setup>
 import GlobalSetting from '@/components/setting/GlobalSetting.vue'
+import { useTabBarStore } from '@/store'
+import { computed } from 'vue'
+
+const tabBarStore = useTabBarStore()
+const cacheList = computed(() => tabBarStore.getCacheList)
 </script>
 
 <style scoped lang="less">

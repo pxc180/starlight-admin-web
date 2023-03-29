@@ -29,6 +29,7 @@ export function generateAsyncMenu(menu, layer = 0) {
         title: item.name,
         requireAuth: true,
         hidden: !!item.hide,
+        keepAlive: !!item.keepAlive,
         icon: item.icon,
         root: !layer
       }
