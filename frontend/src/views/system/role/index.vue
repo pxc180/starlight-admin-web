@@ -7,7 +7,7 @@
     >
       <template v-slot:item1>
         <a-form-item field="roleName" label="角色名称">
-          <a-input v-model="form.roleName" />
+          <a-input v-model="form.roleName" placeholder="请输入" />
         </a-form-item>
       </template>
       <template v-slot:item2>
@@ -90,7 +90,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import usePageList from '@/hooks/usePageList'
 import { queryRoleList, deleteRoleById } from '@/api/modules/role'
 import RoleFormModal from './components/roleFormModal.vue'
@@ -126,10 +126,6 @@ const onCheckRoleUser = (record) => {
 const onAwardedPermissions = (record) => {
   setPermissionsRef.value.onShow(record._id)
 }
-
-onMounted(() => {
-  console.log(1111111)
-})
 </script>
 
 <script>
