@@ -1,6 +1,8 @@
 import { Message } from '@arco-design/web-vue'
 import { useAppStore, useUserStore } from '@/store'
 
+import { NOT_FOUND } from '../constants'
+
 export default function setupServerPermissionGuard(router) {
   router.beforeEach((to, from, next) => {
     const appStore = useAppStore()
@@ -20,11 +22,7 @@ export default function setupServerPermissionGuard(router) {
         result.forEach((item) => {
           router.addRoute('root', item)
         })
-        router.addRoute({
-          path: '/:pathMatch(.*)*',
-          name: 'notFound',
-          component: () => import('@/views/notFound/index.vue')
-        })
+        router.addRoute(NOT_FOUND)
 
         const redirect = decodeURIComponent(from.query.redirect || to.path)
         if (to.path === redirect) {
