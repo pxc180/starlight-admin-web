@@ -1,5 +1,11 @@
 export const NOT_FOUND = {
-  name: 'notFound'
+  path: '/:pathMatch(.*)*',
+  name: 'notFound',
+  component: () => import('@/views/notFound/index.vue'),
+  meta: {
+    title: '404',
+    noAffix: true
+  }
 }
 
 export const DEFAULT_ROUTE_NAME = 'dashboard-workplace'

@@ -4,16 +4,7 @@ import createRouteGuard from './guard'
 import { generateLocalMenu } from '@/utils/permissions.js'
 
 import defaultSettings from '@/config/appSettings.json'
-
-const notFoundRouter = {
-  path: '/:pathMatch(.*)*',
-  name: 'notFound',
-  component: () => import('@/views/notFound/index.vue'),
-  meta: {
-    title: '404',
-    noAffix: true
-  }
-}
+import { NOT_FOUND } from './constants'
 
 const constantRouter = [
   {
@@ -48,7 +39,7 @@ if (!defaultSettings.menuFromServer) {
   generateLocalMenu(appRoutes).forEach((item) => {
     router.addRoute('root', item)
   })
-  router.addRoute(notFoundRouter)
+  router.addRoute(NOT_FOUND)
 }
 
 createRouteGuard(router)
