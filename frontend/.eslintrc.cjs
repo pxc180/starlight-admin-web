@@ -4,7 +4,11 @@ module.exports = {
     es2021: true,
     node: true
   },
-  extends: ['plugin:vue/vue3-essential', 'standard'],
+  extends: [
+    './eslintrc-auto-import.json',
+    'plugin:vue/vue3-essential',
+    'standard'
+  ],
   overrides: [],
   parser: 'vue-eslint-parser',
   parserOptions: {

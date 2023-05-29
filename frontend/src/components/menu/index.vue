@@ -1,9 +1,13 @@
 <script lang="jsx">
-import { compile, defineComponent, h, ref, computed } from 'vue'
+import { compile, defineAsyncComponent, h } from 'vue'
 import { useRouter } from 'vue-router'
 import { listenerRouteChange } from '@/utils/routeListener'
 import useMenuTree from './useMenuTree'
 import { useAppStore } from '@/store'
+
+const iconModules = import.meta.glob(
+  '/node_modules/@arco-design/web-vue/es/icon/**/index.js'
+)
 
 export default defineComponent({
   props: { mode: { type: String, default: 'vertical' } },
@@ -35,7 +39,14 @@ export default defineComponent({
         if (routers) {
           routers.forEach((element) => {
             const icon = element?.meta?.icon
-              ? () => h(compile(`<${element.meta.icon}/>`))
+              ? () =>
+                  h(
+                    defineAsyncComponent(
+                      iconModules[
+                        `/node_modules/@arco-design/web-vue/es/icon/${element.meta.icon}/index.js`
+                      ]
+                    )
+                  )
               : null
 
             const node =

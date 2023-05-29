@@ -77,11 +77,6 @@
 
 <script setup>
 import Menu from '../menu/index.vue'
-import {
-  IconUser,
-  IconExport,
-  IconSettings
-} from '@arco-design/web-vue/es/icon'
 import { computed } from 'vue'
 import { useDark, useToggle, useFullscreen } from '@vueuse/core'
 import { useRouter } from 'vue-router'
