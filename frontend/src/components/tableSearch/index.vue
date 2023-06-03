@@ -1,50 +1,65 @@
 <template>
-  <a-row>
-    <a-col :flex="1">
-      <a-form :model="props.form" :auto-label-width="true">
-        <a-grid :collapsed-rows="1" :cols="col" :col-gap="16" :row-gap="0">
-          <slot v-for="(item, index) in slotsName" :key="index" :name="item">
-          </slot>
-        </a-grid>
-      </a-form>
-    </a-col>
-    <a-col
-      :flex="slotsName.length > resultCol ? '108px' : '198px'"
-      style="display: flex"
-    >
-      <a-divider
-        :style="{ height: slotsName.length > resultCol ? '84px' : '32px' }"
-        direction="vertical"
-      />
-      <div
-        style="
-          flex: 1;
-          display: flex;
-          justify-content: space-between;
-          flex-wrap: wrap;
-        "
-      >
-        <a-button
-          type="primary"
-          :style="{
-            marginBottom: slotsName.length > resultCol ? '20px' : '0px'
-          }"
-          @click="onSearchQuery"
+  <div style="overflow: hidden">
+    <a-row>
+      <a-col :flex="1">
+        <a-form :model="props.form" :auto-label-width="true">
+          <a-grid
+            :collapsed-rows="1"
+            :cols="col"
+            :col-gap="16"
+            :row-gap="0"
+            :collapsed="collapsed"
+          >
+            <a-grid-item v-for="item in slotsName" :key="item">
+              <slot :name="item"></slot>
+            </a-grid-item>
+          </a-grid>
+        </a-form>
+      </a-col>
+      <a-col :flex="multipleRows ? '108px' : '198px'" style="display: flex">
+        <a-divider
+          :style="{ height: multipleRows ? '84px' : '32px' }"
+          direction="vertical"
+        />
+        <div
+          style="
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+          "
         >
-          <template #icon>
-            <icon-search />
-          </template>
-          查询
-        </a-button>
-        <a-button @click="onResetQuery">
-          <template #icon>
-            <icon-refresh />
-          </template>
-          重置
-        </a-button>
-      </div>
-    </a-col>
-  </a-row>
+          <a-button
+            type="primary"
+            :style="{
+              marginBottom: multipleRows ? '20px' : '0px'
+            }"
+            @click="onSearchQuery"
+          >
+            <template #icon>
+              <icon-search />
+            </template>
+            查询
+          </a-button>
+          <a-button @click="onResetQuery">
+            <template #icon>
+              <icon-refresh />
+            </template>
+            重置
+          </a-button>
+        </div>
+      </a-col>
+    </a-row>
+    <a
+      v-if="resultCol < slotsName.length"
+      class="collapsed-action"
+      @click="collapsed = !collapsed"
+    >
+      {{ collapsed ? '展开' : '收起' }}
+      <IconDown v-if="collapsed" />
+      <IconUp v-else />
+    </a>
+  </div>
 </template>
 
 <script setup>
@@ -56,6 +71,8 @@ import {
   useSlots,
   reactive
 } from 'vue'
+
+const collapsed = ref(false)
 
 const responsiveMap = {
   xs: '(max-width: 575px)',
@@ -86,6 +103,10 @@ const resultCol = computed(() => {
     }
   }
   return res
+})
+
+const multipleRows = computed(() => {
+  return !collapsed.value && slotsName.value.length > resultCol.value
 })
 
 const matchHandlers = {}
@@ -137,4 +158,15 @@ const props = defineProps({
 const slotsName = computed(() => Object.keys(toRaw(slots)))
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.collapsed-action {
+  cursor: pointer;
+  float: right;
+  margin-top: -8px;
+  margin-bottom: 12px;
+  color: rgb(var(--primary-6));
+  &:hover {
+    color: rgb(var(--primary-5));
+  }
+}
+</style>
