@@ -1,5 +1,5 @@
 <template>
-  <div style="overflow: hidden">
+  <div style="overflow: hidden; position: relative">
     <a-row>
       <a-col :flex="1">
         <a-form :model="props.form" :auto-label-width="true">
@@ -16,9 +16,9 @@
           </a-grid>
         </a-form>
       </a-col>
-      <a-col :flex="multipleRows ? '108px' : '198px'" style="display: flex">
+      <a-col :flex="multipleRows > 1 ? '108px' : '198px'" style="display: flex">
         <a-divider
-          :style="{ height: multipleRows ? '84px' : '32px' }"
+          :style="{ height: multipleRows > 1 ? '84px' : '32px' }"
           direction="vertical"
         />
         <div
@@ -32,7 +32,7 @@
           <a-button
             type="primary"
             :style="{
-              marginBottom: multipleRows ? '20px' : '0px'
+              marginBottom: multipleRows > 1 ? '20px' : '0px'
             }"
             @click="onSearchQuery"
           >
@@ -52,7 +52,7 @@
     </a-row>
     <a
       v-if="resultCol < slotsName.length"
-      class="collapsed-action"
+      :class="['collapsed-action', multipleRows <= 2 ? 'normal' : 'position']"
       @click="collapsed = !collapsed"
     >
       {{ collapsed ? '展开' : '收起' }}
@@ -63,15 +63,6 @@
 </template>
 
 <script setup>
-import {
-  computed,
-  onUnmounted,
-  onMounted,
-  toRaw,
-  useSlots,
-  reactive
-} from 'vue'
-
 const collapsed = ref(false)
 
 const responsiveMap = {
@@ -106,7 +97,10 @@ const resultCol = computed(() => {
 })
 
 const multipleRows = computed(() => {
-  return !collapsed.value && slotsName.value.length > resultCol.value
+  if (collapsed.value || slotsName.value.length <= resultCol.value) {
+    return 1
+  }
+  return Math.ceil(slotsName.value.length / resultCol.value)
 })
 
 const matchHandlers = {}
@@ -161,10 +155,18 @@ const slotsName = computed(() => Object.keys(toRaw(slots)))
 <style scoped lang="less">
 .collapsed-action {
   cursor: pointer;
-  float: right;
-  margin-top: -8px;
   margin-bottom: 12px;
   color: rgb(var(--primary-6));
+
+  &.normal {
+    float: right;
+    margin-top: -8px;
+  }
+  &.position {
+    position: absolute;
+    right: 0px;
+    top: 92px;
+  }
   &:hover {
     color: rgb(var(--primary-5));
   }
